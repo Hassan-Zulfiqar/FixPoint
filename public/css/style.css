@@ -1,0 +1,215 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: royalblue;
+    --text-dark: #333;
+    --text-light: #666;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-color);
+    margin: 1rem auto;
+}
+
+/* NAVBAR */
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand{
+    font-weight: bold;
+    font-size: 22px !important;
+    color:royalblue !important;
+    font-family: 'Poppins', 'sans-serif';
+    letter-spacing: 0.5px;
+}
+.navbar-brand:hover{
+    color:darkslateblue !important;
+}
+.navbar-nav .nav-link {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease-in-out; /* Smooth color transition */
+    padding-bottom: 5px; /* Space for underline */
+}
+
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #0d6efd; /* Bootstrap Primary Blue */
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0d6efd; /* Change text color on hover */
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 100%; /* Expands the underline */
+}
+
+.scroll2 {
+    display: inline-block;
+    margin-top: 50px;
+    margin-left: 40px; /* Adjust as needed */
+    font-size: 24px; /* Adjust the icon size as needed */
+}
+
+/* SERVICES CARDS  */
+
+.card {
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    height: 100%;
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card h4 {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    margin: 15px 0;
+    transition: color 0.3s ease;
+}
+
+.card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.custom-fa {
+    color: var(--primary-color);
+    font-size: 50px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .custom-fa {
+    transform: scale(1.1);
+}
+
+/* Button Styles */
+.btn-primary {
+    padding: 8px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: var(--text-light);
+}
+
+.img-fluid {
+    transition: transform 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: scale(1.02);
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+/* Stats section */
+.fw-bold {
+    color: var(--primary-color);
+}
+
+.text-muted {
+    font-size: 0.9rem;
+}
+
+ul li a{
+    text-decoration: none;
+}
+@media screen and (max-width: 991px) {
+    #home.container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+    #home .row.custom-row1 {
+        padding-top: 2rem !important;
+    }
+    .lead{
+        font-size: 1rem !important;
+    }
+}
+@media screen and (max-width: 768px) {
+    #intro{
+        padding: 3rem 1rem !important;
+    }
+    #intro p{
+        font-size: 18px !important;
+    }
+    .card{
+        margin: 5px;
+    }
+    .row.service-row {
+        margin-top: 0 !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #intro p{
+        font-size: 16px !important;
+    }
+}
