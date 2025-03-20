@@ -1,14 +1,28 @@
 const express = require("express");
-const app = express();
 const path = require("path");
+const sequelize = require("./config/database");
+const User = require("./models/User");
+const ServiceProvider = require("./models/service_providers");
 
-app.set("view engine", "ejs"); // Set EJS as template engine
-app.use(express.static(path.join(__dirname, "public"))); // Serve static files
+const app = express();
 
+app.use(express.json()); // Middleware to parse JSON
+
+// Sync all models and create tables
+sequelize.sync({ alter: true })
+    .then(() => console.log("All tables synchronized with MySQL"))
+    .catch(err => console.error("Error syncing tables:", err));
+
+// ✅ Serve static files from the 'public' folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// ✅ Serve the landing page
 app.get("/", (req, res) => {
-    res.render("index");  // Renders views/index.ejs
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+// Start the server
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });
