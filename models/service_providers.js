@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const User = require("./user"); // Import User model
+const User = require("./User");
 
 const ServiceProvider = sequelize.define("ServiceProvider", {
     id: {
@@ -18,7 +18,7 @@ const ServiceProvider = sequelize.define("ServiceProvider", {
         }
     },
     service_type: {
-        type: DataTypes.STRING(100), // Changed ENUM to STRING for flexibility
+        type: DataTypes.STRING(100),
         allowNull: false
     },
     licence_doc: {

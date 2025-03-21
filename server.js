@@ -1,25 +1,28 @@
 const express = require("express");
 const path = require("path");
+const bodyParser = require("body-parser");
 const sequelize = require("./config/database");
-const User = require("./models/User");
-const ServiceProvider = require("./models/service_providers");
+const authRoutes = require("./routes/auth_routes");
 
 const app = express();
 
-app.use(express.json()); // Middleware to parse JSON
+// Middleware
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
-// Sync all models and create tables
+// Sync database models
 sequelize.sync({ alter: true })
     .then(() => console.log("All tables synchronized with MySQL"))
     .catch(err => console.error("Error syncing tables:", err));
 
-// ✅ Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, "public")));
-
-// ✅ Serve the landing page
+// Serve HTML file
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+// Use authentication routes
+app.use("/", authRoutes);
 
 // Start the server
 const PORT = 3000;
