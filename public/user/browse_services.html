@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixPoint - Browse Services</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        .service-card {
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .category-pill.active {
+            background-color: #0066cc !important;
+            color: white !important;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        .service-provider-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .filter-bar {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(to right, #0066cc, #17a2b8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-tools me-2"></i>FixPoint
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="user_dashboard.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="browse_services.html">
+                            <i class="fas fa-search me-1"></i> Browse Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="request_service.html">
+                            <i class="fas fa-plus-circle me-1"></i> Request Service
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i> My Requests
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell me-1"></i>
+                            <span class="badge bg-danger notification-badge">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Your plumbing request was approved</a></li>
+                            <li><a class="dropdown-item" href="#">Electrician will arrive tomorrow</a></li>
+                            <li><a class="dropdown-item" href="#">Please rate your recent service</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">See all notifications</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> John Doe
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="user_profile.html"><i class="fas fa-id-card me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-4">Browse Services</h2>
+                
+                <!-- Search and Filter Bar -->
+                <div class="filter-bar mb-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" class="form-control" placeholder="Search services, providers, etc.">
+                                <button class="btn btn-primary" type="button">Search</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option selected>Sort by</option>
+                                <option value="rating_high">Rating: High to Low</option>
+                                <option value="rating_low">Rating: Low to High</option>
+                                <option value="price_high">Price: High to Low</option>
+                                <option value="price_low">Price: Low to High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option selected>Location</option>
+                                <option value="1">Within 5 miles</option>
+                                <option value="2">Within 10 miles</option>
+                                <option value="3">Within 20 miles</option>
+                                <option value="4">Any distance</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Categories -->
+                <div class="mb-4 d-flex flex-wrap gap-2">
+                    <button class="btn btn-sm rounded-pill category-pill active">All</button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-bolt me-1"></i>Electrical
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-wrench me-1"></i>Plumbing
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-broom me-1"></i>Cleaning
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-paint-roller me-1"></i>Painting
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-hammer me-1"></i>Carpentry
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-snowflake me-1"></i>AC Repair
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-couch me-1"></i>Furniture
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-bug me-1"></i>Pest Control
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-tree me-1"></i>Gardening
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill category-pill">
+                        <i class="fas fa-truck me-1"></i>Moving
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services List -->
+        <div class="row g-4">
+            <!-- Service Provider 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?electrician" class="card-img-top service-provider-img" alt="Service Provider">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">Top Rated</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Mike's Electrical Services</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-bolt me-1"></i>Electrical</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-1">4.5 (120 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Professional electrical services for all your home and business needs. Licensed and insured.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Lighting Installation</span>
+                            <span class="badge bg-light text-dark me-1">Electrical Repairs</span>
+                            <span class="badge bg-light text-dark me-1">Circuit Upgrades</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>2.5 miles away</span>
+                            <a href="request_service.html?provider=1" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Provider 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?plumber" class="card-img-top service-provider-img" alt="Service Provider">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">Top Rated</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Pro Plumbing Solutions</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-wrench me-1"></i>Plumbing</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <span class="ms-1">5.0 (89 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Expert plumbing services with 24/7 emergency availability. No job too big or small!</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Leak Repair</span>
+                            <span class="badge bg-light text-dark me-1">Pipe Installation</span>
+                            <span class="badge bg-light text-dark me-1">Water Heaters</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>3.1 miles away</span>
+                            <a href="request_service.html?provider=2" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Provider 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?cleaner" class="card-img-top service-provider-img" alt="Service Provider">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Sparkling Clean Co.</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-broom me-1"></i>Cleaning</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <span class="ms-1">4.2 (67 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Professional cleaning services for homes and offices. Eco-friendly products available.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Deep Cleaning</span>
+                            <span class="badge bg-light text-dark me-1">Regular Maintenance</span>
+                            <span class="badge bg-light text-dark me-1">Move Out</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>1.8 miles away</span>
+                            <a href="request_service.html?provider=3" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Provider 4 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?carpenter" class="card-img-top service-provider-img" alt="Service Provider">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Woodcraft Masters</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-hammer me-1"></i>Carpentry</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-1">4.6 (52 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Custom carpentry solutions with attention to detail. From repairs to full installations.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Custom Furniture</span>
+                            <span class="badge bg-light text-dark me-1">Door Repairs</span>
+                            <span class="badge bg-light text-dark me-1">Cabinets</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>5.3 miles away</span>
+                            <a href="request_service.html?provider=4" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Provider 5 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?painter" class="card-img-top service-provider-img" alt="Service Provider">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-warning">New</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Elite Painting Services</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-paint-roller me-1"></i>Painting</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <span class="ms-1">4.1 (28 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Transform your space with our professional painting services. Interior and exterior experts.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Interior Painting</span>
+                            <span class="badge bg-light text-dark me-1">Exterior Painting</span>
+                            <span class="badge bg-light text-dark me-1">Staining</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>4.2 miles away</span>
+                            <a href="request_service.html?provider=5" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Service Provider 6 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card service-card">
+                    <div class="position-relative">
+                        <img src="https://source.unsplash.com/random/300x200/?gardener" class="card-img-top service-provider-img" alt="Service Provider">
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">Green Thumb Gardens</h5>
+                            <span class="badge bg-primary rounded-pill"><i class="fas fa-tree me-1"></i>Gardening</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-1">4.7 (35 reviews)</span>
+                        </div>
+                        <p class="card-text mb-3">Complete landscaping and garden maintenance services for beautiful outdoor spaces.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-light text-dark me-1">Lawn Care</span>
+                            <span class="badge bg-light text-dark me-1">Landscaping</span>
+                            <span class="badge bg-light text-dark me-1">Tree Service</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fas fa-map-marker-alt me-1"></i>6.8 miles away</span>
+                            <a href="request_service.html?provider=6" class="btn btn-primary">Request Service</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5><i class="fas fa-tools me-2"></i>FixPoint</h5>
+                    <p class="text-muted">Your trusted platform for local home services.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Our Services</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Become a Provider</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Contact Info</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Service St, City, Country</li>
+                        <li><i class="fas fa-phone me-2"></i>(123) 456-7890</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@fixpoint.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Follow Us</h6>
+                    <div class="d-flex">
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-facebook-square fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-twitter-square fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white"><i class="fab fa-linkedin fa-2x"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <form>
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Subscribe to newsletter">
+                                <button class="btn btn-primary" type="submit">Go</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center text-muted">
+                <small>&copy; 2023 FixPoint. All Rights Reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

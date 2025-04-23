@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Users & Providers | FixPoint Connect Admin</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- DataTables CSS -->
+  <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <style>
+    .sidebar {
+      min-height: 100vh;
+      background-color: #343a40;
+    }
+    .sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.75rem 1.25rem;
+    }
+    .sidebar .nav-link:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .sidebar .nav-link.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    .sidebar .nav-link i {
+      margin-right: 10px;
+    }
+    .main-content {
+      padding: 20px;
+    }
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+    .user-type {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .user-type.customer {
+      background-color: #28a745;
+    }
+    .user-type.provider {
+      background-color: #007bff;
+    }
+    .action-btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <div class="position-sticky pt-3">
+          <div class="d-flex align-items-center px-3 py-3 mb-3">
+            <span class="fs-4 text-white fw-bold">FixPoint Admin</span>
+          </div>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="admin_dashboard.html">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin_verify_providers.html">
+                <i class="fas fa-user-check"></i> Verify Providers
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="admin_manage_users.html">
+                <i class="fas fa-users"></i> Manage Users
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin_manage_services.html">
+                <i class="fas fa-tools"></i> Manage Services
+              </a>
+            </li>
+            <li class="nav-item mt-5">
+              <a class="nav-link" href="#">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">Manage Users & Providers</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <button type="button" class="btn btn-sm btn-outline-primary me-2">
+              <i class="fas fa-download"></i> Export CSV
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+              <i class="fas fa-filter"></i> Filter
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Cards -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Total Users</h6>
+                    <h2 class="mb-0">1,601</h2>
+                  </div>
+                  <i class="fas fa-users fa-2x opacity-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Customers</h6>
+                    <h2 class="mb-0">1,254</h2>
+                  </div>
+                  <i class="fas fa-user fa-2x opacity-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-info mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">Providers</h6>
+                    <h2 class="mb-0">347</h2>
+                  </div>
+                  <i class="fas fa-user-tie fa-2x opacity-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <h6 class="card-title">New This Month</h6>
+                    <h2 class="mb-0">87</h2>
+                  </div>
+                  <i class="fas fa-user-plus fa-2x opacity-50"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="usersTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" type="button" role="tab" aria-controls="all-users" aria-selected="true">All Users</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers" type="button" role="tab" aria-controls="customers" aria-selected="false">Customers</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="providers-tab" data-bs-toggle="tab" data-bs-target="#providers" type="button" role="tab" aria-controls="providers" aria-selected="false">Service Providers</button>
+          </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="usersTabsContent">
+          <div class="tab-pane fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
+            <div class="card border-0 shadow-sm mt-4">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="usersTable" class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>User</th>
+                        <th>Type</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Location</th>
+                        <th>Joined Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>John Smith</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type provider"></span> Provider</td>
+                        <td>john.smith@example.com</td>
+                        <td>(555) 123-4567</td>
+                        <td>San Francisco, CA</td>
+                        <td>Apr 12, 2023</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>Emily Davis</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type customer"></span> Customer</td>
+                        <td>emily.davis@example.com</td>
+                        <td>(555) 987-6543</td>
+                        <td>Los Angeles, CA</td>
+                        <td>Mar 28, 2023</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>Michael Brown</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type provider"></span> Provider</td>
+                        <td>michael.b@example.com</td>
+                        <td>(555) 345-6789</td>
+                        <td>Chicago, IL</td>
+                        <td>Apr 5, 2023</td>
+                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>Sarah Johnson</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type customer"></span> Customer</td>
+                        <td>sarah.j@example.com</td>
+                        <td>(555) 567-8901</td>
+                        <td>Miami, FL</td>
+                        <td>Mar 22, 2023</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>Robert Lee</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type provider"></span> Provider</td>
+                        <td>robert.lee@example.com</td>
+                        <td>(555) 234-5678</td>
+                        <td>Austin, TX</td>
+                        <td>Apr 10, 2023</td>
+                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>Jennifer Wilson</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type customer"></span> Customer</td>
+                        <td>jennifer.w@example.com</td>
+                        <td>(555) 890-1234</td>
+                        <td>Denver, CO</td>
+                        <td>Apr 1, 2023</td>
+                        <td><span class="badge bg-danger">Blocked</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-success action-btn"><i class="fas fa-check"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="d-flex align-items-center">
+                            <img src="https://via.placeholder.com/32" alt="Avatar" class="user-avatar me-2">
+                            <span>David Martinez</span>
+                          </div>
+                        </td>
+                        <td><span class="user-type customer"></span> Customer</td>
+                        <td>david.m@example.com</td>
+                        <td>(555) 456-7890</td>
+                        <td>Phoenix, AZ</td>
+                        <td>Mar 25, 2023</td>
+                        <td><span class="badge bg-success">Active</span></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-primary action-btn" data-bs-toggle="modal" data-bs-target="#userDetailsModal"><i class="fas fa-eye"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-warning action-btn"><i class="fas fa-ban"></i></button>
+                            <button type="button" class="btn btn-sm btn-outline-danger action-btn"><i class="fas fa-trash-alt"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Other tabs would have similar content structures -->
+          <div class="tab-pane fade" id="customers" role="tabpanel" aria-labelledby="customers-tab">
+            <!-- Similar table for customers only -->
+            <p class="mt-4">Customer tab content would appear here with filtered data.</p>
+          </div>
+          <div class="tab-pane fade" id="providers" role="tabpanel" aria-labelledby="providers-tab">
+            <!-- Similar table for providers only -->
+            <p class="mt-4">Providers tab content would appear here with filtered data.</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- User Details Modal -->
+  <div class="modal fade" id="userDetailsModal" tabindex="-1" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userDetailsModalLabel">User Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="User avatar">
+              <h5>John Smith</h5>
+              <p class="text-muted">Service Provider - Plumber</p>
+              <span class="badge bg-success mb-3">Active</span>
+              <div class="d-grid gap-2">
+                <button class="btn btn-sm btn-outline-warning">
+                  <i class="fas fa-ban"></i> Block User
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-trash-alt"></i> Delete User
+                </button>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <h6>Personal Information</h6>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Full Name:</strong></p>
+                  <p>John Robert Smith</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Email:</strong></p>
+                  <p>john.smith@example.com</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Phone Number:</strong></p>
+                  <p>(555) 123-4567</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Location:</strong></p>
+                  <p>San Francisco, California</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Registration Date:</strong></p>
+                  <p>April 12, 2023</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Last Login:</strong></p>
+                  <p>Today, 10:45 AM</p>
+                </div>
+              </div>
+              
+              <h6 class="mt-4">Provider Details</h6>
+              <hr>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Services Offered:</strong></p>
+                  <p>Plumbing repairs, Pipe installation, Water heater installation</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Experience:</strong></p>
+                  <p>6 Years</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>License Status:</strong></p>
+                  <p><span class="badge bg-success">Verified</span></p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Rating:</strong></p>
+                  <p>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star-half-alt text-warning"></i>
+                    (4.5/5)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables -->
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#usersTable').DataTable({
+        pageLength: 10,
+        responsive: true
+      });
+    });
+  </script>
+</body>
+</html>

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(function (data) {
             if (data.message === "Login successful!") {
-                window.location.href = "/temp.html"; // Redirect on success
+                window.location.href = "/user/user_dashboard.html"; // Redirect on success
             } else {
                 document.getElementById("error-message").textContent = data.message; // Show error in <p>
             }

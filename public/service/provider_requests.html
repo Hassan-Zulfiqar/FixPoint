@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixPoint - Service Requests</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: #343a40;
+        }
+        .nav-link {
+            color: rgba(255,255,255,.75);
+        }
+        .nav-link:hover {
+            color: white;
+        }
+        .nav-link.active {
+            color: white;
+            font-weight: bold;
+        }
+        .rating-star {
+            color: #ffc107;
+        }
+        .request-card {
+            transition: all 0.3s ease;
+        }
+        .request-card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-tools me-2"></i>
+                FixPoint
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_services.html">My Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="provider_requests.html">Service Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_profile.html">My Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a class="text-white text-decoration-none dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell me-2"></i>
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">New service request from John D.</a></li>
+                            <li><a class="dropdown-item" href="#">Request accepted: Plumbing repair</a></li>
+                            <li><a class="dropdown-item" href="#">New review: 5 stars from Emily T.</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <a class="text-white text-decoration-none dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Profile">
+                            Mike's Plumbing
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="provider_profile.html"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 d-none d-lg-block sidebar p-0">
+                <nav class="navbar navbar-dark align-items-start p-0 py-2">
+                    <div class="container-fluid d-flex flex-column p-0">
+                        <div class="text-center mb-4 mt-3">
+                            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3" alt="Profile">
+                            <h5 class="text-white">Mike's Plumbing</h5>
+                            <div class="text-white-50">Professional Plumber</div>
+                            <div class="d-flex justify-content-center mt-2">
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star-half-alt rating-star"></i>
+                                <span class="text-white ms-2">4.7/5</span>
+                            </div>
+                        </div>
+                        <ul class="nav flex-column w-100">
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_dashboard.html">
+                                    <i class="fas fa-tachometer-alt me-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_services.html">
+                                    <i class="fas fa-tools me-2"></i>
+                                    My Services
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active px-3" href="provider_requests.html">
+                                    <i class="fas fa-clipboard-list me-2"></i>
+                                    Service Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_profile.html">
+                                    <i class="fas fa-user-circle me-2"></i>
+                                    My Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-chart-line me-2"></i>
+                                    Analytics
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-money-bill-wave me-2"></i>
+                                    Earnings
+                                </a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-sign-out-alt me-2"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!-- Main Content Area -->
+            <main class="col-lg-10 ms-auto px-4 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-clipboard-list me-2"></i>Service Requests</h2>
+                </div>
+
+                <!-- Filters and Search -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-0 bg-light" placeholder="Search requests...">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select bg-light border-0">
+                                    <option value="all" selected>All Requests</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="accepted">Accepted</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="declined">Declined</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select bg-light border-0">
+                                    <option value="recent" selected>Most Recent</option>
+                                    <option value="oldest">Oldest First</option>
+                                    <option value="high-price">Highest Price</option>
+                                    <option value="low-price">Lowest Price</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary w-100">
+                                    <i class="fas fa-filter me-2"></i>Filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Requests Summary Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-0">New Requests</h6>
+                                    <p class="display-6 mb-0">7</p>
+                                </div>
+                                <i class="fas fa-clipboard-list fa-3x opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-white bg-success">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-0">Accepted</h6>
+                                    <p class="display-6 mb-0">12</p>
+                                </div>
+                                <i class="fas fa-check-circle fa-3x opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-dark bg-warning">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-0">Scheduled</h6>
+                                    <p class="display-6 mb-0">5</p>
+                                </div>
+                                <i class="fas fa-calendar-alt fa-3x opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card text-white bg-info">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="card-title mb-0">Completed</h6>
+                                    <p class="display-6 mb-0">42</p>
+                                </div>
+                                <i class="fas fa-flag-checkered fa-3x opacity-25"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs mb-4" id="requestTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab">
+                            Pending <span class="badge bg-primary ms-1">7</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="accepted-tab" data-bs-toggle="tab" data-bs-target="#accepted" type="button" role="tab">
+                            Accepted <span class="badge bg-success ms-1">12</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab">
+                            Completed <span class="badge bg-info ms-1">42</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="declined-tab" data-bs-toggle="tab" data-bs-target="#declined" type="button" role="tab">
+                            Declined <span class="badge bg-danger ms-1">3</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="requestTabsContent">
+                    <!-- Pending Requests Tab -->
+                    <div class="tab-pane fade show active" id="pending" role="tabpanel">
+                        <div class="row">
+                            <!-- Pending Request Card 1 -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card request-card h-100">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Pipe Leak Repair</h5>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Customer Photo">
+                                            <div>
+                                                <h6 class="mb-0">John Doe</h6>
+                                                <div class="text-muted small">
+                                                    <i class="fas fa-map-marker-alt me-1"></i> 1234 Main St, Anytown
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Requested Date</div>
+                                                <div><i class="far fa-calendar-alt me-1"></i> April 20, 2025</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Preferred Time</div>
+                                                <div><i class="far fa-clock me-1"></i> 2:30 PM - 4:30 PM</div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="small text-muted mb-1">Customer Message</div>
+                                            <div class="p-2 bg-light rounded">
+                                                I have a leaking pipe under my kitchen sink that needs to be fixed ASAP. There's water collecting in the cabinet below.
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Estimated Price</div>
+                                                <div class="fw-bold">$75 - $150</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Request Received</div>
+                                                <div>Today, 9:45 AM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#messageModal">
+                                            <i class="fas fa-comment me-1"></i> Message
+                                        </button>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#acceptModal">
+                                                <i class="fas fa-check me-1"></i> Accept
+                                            </button>
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declineModal">
+                                                <i class="fas fa-times me-1"></i> Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pending Request Card 2 -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card request-card h-100">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Bathroom Sink Installation</h5>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Customer Photo">
+                                            <div>
+                                                <h6 class="mb-0">Sarah Williams</h6>
+                                                <div class="text-muted small">
+                                                    <i class="fas fa-map-marker-alt me-1"></i> 5678 Oak St, Anytown
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Requested Date</div>
+                                                <div><i class="far fa-calendar-alt me-1"></i> April 22, 2025</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Preferred Time</div>
+                                                <div><i class="far fa-clock me-1"></i> 10:00 AM - 12:00 PM</div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="small text-muted mb-1">Customer Message</div>
+                                            <div class="p-2 bg-light rounded">
+                                                I've purchased a new bathroom sink and need it installed. The old one has been removed already. I have all the parts needed.
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Estimated Price</div>
+                                                <div class="fw-bold">$150 - $275</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Request Received</div>
+                                                <div>Today, 11:20 AM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-comment me-1"></i> Message
+                                        </button>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success">
+                                                <i class="fas fa-check me-1"></i> Accept
+                                            </button>
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-times me-1"></i> Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pending Request Card 3 -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card request-card h-100">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Water Heater Repair</h5>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Customer Photo">
+                                            <div>
+                                                <h6 class="mb-0">Mike Johnson</h6>
+                                                <div class="text-muted small">
+                                                    <i class="fas fa-map-marker-alt me-1"></i> 910 Pine Ave, Anytown
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Requested Date</div>
+                                                <div><i class="far fa-calendar-alt me-1"></i> April 21, 2025</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Preferred Time</div>
+                                                <div><i class="far fa-clock me-1"></i> 1:00 PM - 3:00 PM</div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="small text-muted mb-1">Customer Message</div>
+                                            <div class="p-2 bg-light rounded">
+                                                Our hot water heater isn't working properly. The water doesn't get hot enough and it makes strange noises when running. It's about 8 years old.
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Estimated Price</div>
+                                                <div class="fw-bold">$150 - $300</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Request Received</div>
+                                                <div>Yesterday, 5:15 PM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-comment me-1"></i> Message
+                                        </button>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success">
+                                                <i class="fas fa-check me-1"></i> Accept
+                                            </button>
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-times me-1"></i> Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pending Request Card 4 -->
+                            <div class="col-lg-6 mb-4">
+                                <div class="card request-card h-100">
+                                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0">Toilet Replacement</h5>
+                                        <span class="badge bg-warning text-dark">Pending</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/50" class="rounded-circle me-3" alt="Customer Photo">
+                                            <div>
+                                                <h6 class="mb-0">Emily Taylor</h6>
+                                                <div class="text-muted small">
+                                                    <i class="fas fa-map-marker-alt me-1"></i> 450 Maple Dr, Anytown
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Requested Date</div>
+                                                <div><i class="far fa-calendar-alt me-1"></i> April 23, 2025</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Preferred Time</div>
+                                                <div><i class="far fa-clock me-1"></i> 9:00 AM - 11:00 AM</div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="small text-muted mb-1">Customer Message</div>
+                                            <div class="p-2 bg-light rounded">
+                                                Need to replace an old toilet in the main bathroom. I've already purchased a new one and it's still in the box. Need professional installation.
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Estimated Price</div>
+                                                <div class="fw-bold">$200 - $350</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="small text-muted mb-1">Request Received</div>
+                                                <div>Yesterday, 3:30 PM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-white d-flex justify-content-between">
+                                        <button class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-comment me-1"></i> Message
+                                        </button>
+                                        <div class="btn-group btn-group-sm">
+                                            <button class="btn btn-success">
+                                                <i class="fas fa-check me-1"></i> Accept
+                                            </button>
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-times me-1"></i> Decline
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation" class="mt-2">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <!-- Accepted Requests Tab -->
+                    <div class="tab-pane fade" id="accepted" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Service</th>
+                                        <th>Date & Time</th>
+                                        <th>Address</th>
+                                        <th>Price Est.</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Robert Brown</div>
+                                            </div>
+                                        </td>
+                                        <td>Kitchen Sink Installation</td>
+                                        <td>Apr 22, 11:00 AM</td>
+                                        <td>789 Elm St, Anytown</td>
+                                        <td>$175</td>
+                                        <td><span class="badge bg-success">Confirmed</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-comment"></i></button>
+                                                <button class="btn btn-outline-secondary"><i class="fas fa-calendar-alt"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Lisa Anderson</div>
+                                            </div>
+                                        </td>
+                                        <td>Shower Fixture Repair</td>
+                                        <td>Apr 23, 3:00 PM</td>
+                                        <td>321 Cedar Ln, Anytown</td>
+                                        <td>$150</td>
+                                        <td><span class="badge bg-success">Confirmed</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-comment"></i></button>
+                                                <button class="btn btn-outline-secondary"><i class="fas fa-calendar-alt"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>David Wilson</div>
+                                            </div>
+                                        </td>
+                                        <td>Pipe Leak Repair</td>
+                                        <td>Apr 21, 10:30 AM</td>
+                                        <td>567 Birch Rd, Anytown</td>
+                                        <td>$120</td>
+                                        <td><span class="badge bg-primary">In Progress</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-comment"></i></button>
+                                                <button class="btn btn-outline-success"><i class="fas fa-check-double"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Jennifer Adams</div>
+                                            </div>
+                                        </td>
+                                        <td>Toilet Installation</td>
+                                        <td>Apr 24, 1:00 PM</td>
+                                        <td>890 Walnut St, Anytown</td>
+                                        <td>$250</td>
+                                        <td><span class="badge bg-success">Confirmed</span></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-comment"></i></button>
+                                                <button class="btn btn-outline-secondary"><i class="fas fa-calendar-alt"></i></button>
+                                                <button class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Completed Requests Tab -->
+                    <div class="tab-pane fade" id="completed" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Service</th>
+                                        <th>Date Completed</th>
+                                        <th>Payment</th>
+                                        <th>Rating</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Emily Taylor</div>
+                                            </div>
+                                        </td>
+                                        <td>Bathroom Sink Repair</td>
+                                        <td>Apr 15, 2025</td>
+                                        <td>$145 <span class="badge bg-success ms-1">Paid</span></td>
+                                        <td>
+                                            <div class="text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <span class="text-dark ms-1">5.0</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-outline-success"><i class="fas fa-receipt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>John Doe</div>
+                                            </div>
+                                        </td>
+                                        <td>Pipe Leak Repair</td>
+                                        <td>Apr 12, 2025</td>
+                                        <td>$95 <span class="badge bg-success ms-1">Paid</span></td>
+                                        <td>
+                                            <div class="text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                                <span class="text-dark ms-1">4.5</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-outline-success"><i class="fas fa-receipt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Sarah Williams</div>
+                                            </div>
+                                        </td>
+                                        <td>Water Heater Repair</td>
+                                        <td>Apr 10, 2025</td>
+                                        <td>$235 <span class="badge bg-success ms-1">Paid</span></td>
+                                        <td>
+                                            <div class="text-warning">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="far fa-star"></i>
+                                                <span class="text-dark ms-1">4.0</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-outline-success"><i class="fas fa-receipt"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Declined Requests Tab -->
+                    <div class="tab-pane fade" id="declined" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Customer</th>
+                                        <th>Service</th>
+                                        <th>Date Requested</th>
+                                        <th>Date Declined</th>
+                                        <th>Reason</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Thomas Lee</div>
+                                            </div>
+                                        </td>
+                                        <td>Gas Line Installation</td>
+                                        <td>Apr 14, 2025</td>
+                                        <td>Apr 14, 2025</td>
+                                        <td>Service not offered</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Rachel Green</div>
+                                            </div>
+                                        </td>
+                                        <td>Full Bathroom Remodel</td>
+                                        <td>Apr 8, 2025</td>
+                                        <td>Apr 8, 2025</td>
+                                        <td>Job too large for current capacity</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                <div>Michael Johnson</div>
+                                            </div>
+                                        </td>
+                                        <td>Water Leak Repair</td>
+                                        <td>Apr 5, 2025</td>
+                                        <td>Apr 5, 2025</td>
+                                        <td>Schedule conflict</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-primary"><i class="fas fa-eye"></i> View</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Message John Doe</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="messageSubject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="messageSubject" value="RE: Pipe Leak Repair Request">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageContent" class="form-label">Message</label>
+                        <textarea class="form-control" id="messageContent" rows="5" placeholder="Type your message here..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Send Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accept Request Modal -->
+    <div class="modal fade" id="acceptModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Accept Service Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to accept the following service request:</p>
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <h6>Pipe Leak Repair</h6>
+                            <p class="mb-1"><strong>From:</strong> John Doe</p>
+                            <p class="mb-1"><strong>Date:</strong> April 20, 2025, 2:30 PM - 4:30 PM</p>
+                            <p class="mb-0"><strong>Location:</strong> 1234 Main St, Anytown</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Estimated Price ($)</label>
+                        <input type="number" class="form-control" id="price" value="100">
+                        <div class="form-text">You can adjust the final price based on actual work performed.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes to Customer (Optional)</label>
+                        <textarea class="form-control" id="notes" rows="3" placeholder="Any additional information for the customer..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success">Accept Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Decline Request Modal -->
+    <div class="modal fade" id="declineModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Decline Service Request</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>You are about to decline the following service request:</p>
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+                            <h6>Pipe Leak Repair</h6>
+                            <p class="mb-1"><strong>From:</strong> John Doe</p>
+                            <p class="mb-1"><strong>Date:</strong> April 20, 2025, 2:30 PM - 4:30 PM</p>
+                            <p class="mb-0"><strong>Location:</strong> 1234 Main St, Anytown</p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="declineReason" class="form-label">Reason for Declining</label>
+                        <select class="form-select" id="declineReason">
+                            <option selected>Select a reason</option>
+                            <option value="schedule">Schedule conflict</option>
+                            <option value="distance">Location too far</option>
+                            <option value="specialization">Outside my expertise</option>
+                            <option value="capacity">Currently at full capacity</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="declineNotes" class="form-label">Additional Comments (Optional)</label>
+                        <textarea class="form-control" id="declineNotes" rows="3" placeholder="Additional explanation for declining the request..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Decline Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

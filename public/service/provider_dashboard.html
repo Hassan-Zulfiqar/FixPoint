@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixPoint - Provider Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: #343a40;
+        }
+        .nav-link {
+            color: rgba(255,255,255,.75);
+        }
+        .nav-link:hover {
+            color: white;
+        }
+        .nav-link.active {
+            color: white;
+            font-weight: bold;
+        }
+        .card-counter {
+            box-shadow: 0 4px 8px rgba(0,0,0,.15);
+            padding: 20px 10px;
+            border-radius: 5px;
+            transition: .3s linear all;
+        }
+        .card-counter:hover {
+            box-shadow: 0 6px 12px rgba(0,0,0,.2);
+        }
+        .card-counter i {
+            font-size: 4em;
+            opacity: 0.3;
+        }
+        .card-counter .count-numbers {
+            position: absolute;
+            right: 35px;
+            top: 20px;
+            font-size: 28px;
+            display: block;
+        }
+        .card-counter .count-name {
+            position: absolute;
+            right: 35px;
+            top: 65px;
+            font-style: italic;
+            opacity: 0.8;
+            display: block;
+            font-size: 18px;
+        }
+        .card-counter.primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .card-counter.success {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .card-counter.warning {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .card-counter.danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .rating-star {
+            color: #ffc107;
+        }
+        .chart-container {
+            height: 260px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-tools me-2"></i>
+                FixPoint
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="provider_dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_services.html">My Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_requests.html">Service Requests</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="provider_profile.html">My Profile</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                        <a class="text-white text-decoration-none dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell me-2"></i>
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">New service request from John D.</a></li>
+                            <li><a class="dropdown-item" href="#">Request accepted: Plumbing repair</a></li>
+                            <li><a class="dropdown-item" href="#">New review: 5 stars from Emily T.</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown ms-3">
+                        <a class="text-white text-decoration-none dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <img src="https://via.placeholder.com/30" class="rounded-circle me-2" alt="Profile">
+                            Mike's Plumbing
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="provider_profile.html"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-2 d-none d-lg-block sidebar p-0">
+                <nav class="navbar navbar-dark align-items-start p-0 py-2">
+                    <div class="container-fluid d-flex flex-column p-0">
+                        <div class="text-center mb-4 mt-3">
+                            <img src="https://via.placeholder.com/120" class="rounded-circle mb-3" alt="Profile">
+                            <h5 class="text-white">Mike's Plumbing</h5>
+                            <div class="text-white-50">Professional Plumber</div>
+                            <div class="d-flex justify-content-center mt-2">
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star rating-star"></i>
+                                <i class="fas fa-star-half-alt rating-star"></i>
+                                <span class="text-white ms-2">4.7/5</span>
+                            </div>
+                        </div>
+                        <ul class="nav flex-column w-100">
+                            <li class="nav-item">
+                                <a class="nav-link active px-3" href="provider_dashboard.html">
+                                    <i class="fas fa-tachometer-alt me-2"></i>
+                                    Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_services.html">
+                                    <i class="fas fa-tools me-2"></i>
+                                    My Services
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_requests.html">
+                                    <i class="fas fa-clipboard-list me-2"></i>
+                                    Service Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="provider_profile.html">
+                                    <i class="fas fa-user-circle me-2"></i>
+                                    My Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-chart-line me-2"></i>
+                                    Analytics
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-money-bill-wave me-2"></i>
+                                    Earnings
+                                </a>
+                            </li>
+                            <li class="nav-item mt-3">
+                                <a class="nav-link px-3" href="#">
+                                    <i class="fas fa-sign-out-alt me-2"></i>
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!-- Main Content Area -->
+            <main class="col-lg-10 ms-auto px-4 py-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-tachometer-alt me-2"></i>Provider Dashboard</h2>
+                    <div>
+                        <span class="badge bg-success p-2">
+                            <i class="fas fa-check-circle me-1"></i> Verified Provider
+                        </span>
+                    </div>
+                </div>
+
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-bell me-2"></i> Welcome back, Mike! You have 5 new service requests waiting for your response.
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3 mb-3">
+                        <div class="card-counter primary position-relative">
+                            <i class="fa fa-clipboard-list"></i>
+                            <span class="count-numbers">12</span>
+                            <span class="count-name">New Requests</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card-counter success position-relative">
+                            <i class="fa fa-check-circle"></i>
+                            <span class="count-numbers">42</span>
+                            <span class="count-name">Completed Jobs</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card-counter warning position-relative">
+                            <i class="fa fa-star"></i>
+                            <span class="count-numbers">4.7</span>
+                            <span class="count-name">Average Rating</span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card-counter danger position-relative">
+                            <i class="fa fa-dollar-sign"></i>
+                            <span class="count-numbers">$3,250</span>
+                            <span class="count-name">Monthly Earnings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Requests -->
+                <div class="row mb-4">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Recent Service Requests</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th>Service</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                        <div>John Doe</div>
+                                                    </div>
+                                                </td>
+                                                <td>Pipe Leak Repair</td>
+                                                <td>Today, 2:30 PM</td>
+                                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-success">Accept</button>
+                                                        <button class="btn btn-danger">Decline</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                        <div>Sarah Williams</div>
+                                                    </div>
+                                                </td>
+                                                <td>Bathroom Sink Install</td>
+                                                <td>Today, 4:00 PM</td>
+                                                <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-success">Accept</button>
+                                                        <button class="btn btn-danger">Decline</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                        <div>Mike Johnson</div>
+                                                    </div>
+                                                </td>
+                                                <td>Water Heater Repair</td>
+                                                <td>Tomorrow, 10:00 AM</td>
+                                                <td><span class="badge bg-success">Accepted</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary">Details</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                                        <div>Emily Taylor</div>
+                                                    </div>
+                                                </td>
+                                                <td>Toilet Replacement</td>
+                                                <td>Tomorrow, 1:30 PM</td>
+                                                <td><span class="badge bg-success">Accepted</span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-primary">Details</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="provider_requests.html" class="btn btn-outline-primary">View All Requests</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Recent Reviews</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="review mb-3 pb-3 border-bottom">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                        <div>
+                                            <h6 class="mb-0">Emily Taylor</h6>
+                                            <div class="text-muted small">3 days ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                    </div>
+                                    <p class="mb-0">"Mike did an excellent job fixing our sink. He was prompt, professional, and explained everything clearly. Highly recommended!"</p>
+                                </div>
+                                <div class="review mb-3 pb-3 border-bottom">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                        <div>
+                                            <h6 class="mb-0">John Doe</h6>
+                                            <div class="text-muted small">1 week ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                    </div>
+                                    <p class="mb-0">"Fast response and quality workmanship. Fixed our leaking pipe in no time. Very reasonable rates too."</p>
+                                </div>
+                                <div class="review">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="">
+                                        <div>
+                                            <h6 class="mb-0">Sarah Williams</h6>
+                                            <div class="text-muted small">2 weeks ago</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                    </div>
+                                    <p class="mb-0">"Great service installing our new bathroom sink. Clean, efficient, and professional."</p>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-outline-primary">View All Reviews</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Chart and Upcoming Jobs -->
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Monthly Earnings</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="earningsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-white">
+                                <h5 class="card-title mb-0">Upcoming Jobs</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Water Heater Repair</h6>
+                                                <div class="text-muted small">Mike Johnson</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="badge bg-primary mb-1">Tomorrow</div>
+                                                <div class="small">10:00 AM</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Toilet Replacement</h6>
+                                                <div class="text-muted small">Emily Taylor</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="badge bg-primary mb-1">Tomorrow</div>
+                                                <div class="small">1:30 PM</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Kitchen Sink Installation</h6>
+                                                <div class="text-muted small">Robert Brown</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="badge bg-primary mb-1">Thursday</div>
+                                                <div class="small">11:00 AM</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Shower Fixture Repair</h6>
+                                                <div class="text-muted small">Lisa Anderson</div>
+                                            </div>
+                                            <div class="text-end">
+                                                <div class="badge bg-primary mb-1">Friday</div>
+                                                <div class="small">3:00 PM</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="text-center mt-3">
+                                    <button class="btn btn-outline-primary">View All Jobs</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Earnings Chart
+        const ctx = document.getElementById('earningsChart').getContext('2d');
+        const earningsChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Monthly Earnings ($)',
+                    data: [2100, 2400, 1900, 2700, 3250, 3500, 3200, 3600, 3800, 3500, 3900, 4200],
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    borderColor: '#28a745',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

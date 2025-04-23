@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixPoint - My Requests</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        .request-card {
+            transition: transform 0.3s;
+        }
+        .request-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .status-pending {
+            background-color: #ffc107;
+        }
+        .status-approved {
+            background-color: #0d6efd;
+        }
+        .status-completed {
+            background-color: #198754;
+        }
+        .status-canceled {
+            background-color: #dc3545;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        .provider-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .request-filters {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .bg-gradient-primary {
+            background: linear-gradient(to right, #0066cc, #17a2b8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-tools me-2"></i>FixPoint
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="user_dashboard.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse_services.html">
+                            <i class="fas fa-search me-1"></i> Browse Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="request_service.html">
+                            <i class="fas fa-plus-circle me-1"></i> Request Service
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="my_requests.html">
+                            <i class="fas fa-clipboard-list me-1"></i> My Requests
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-bell me-1"></i>
+                            <span class="badge bg-danger notification-badge">3</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Your plumbing request was approved</a></li>
+                            <li><a class="dropdown-item" href="#">Electrician will arrive tomorrow</a></li>
+                            <li><a class="dropdown-item" href="#">Please rate your recent service</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">See all notifications</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> John Doe
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="user_profile.html"><i class="fas fa-id-card me-2"></i>My Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h2 class="mb-4">My Service Requests</h2>
+        
+        <!-- Filters -->
+        <div class="request-filters">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="statusFilter" class="form-label">Filter by Status</label>
+                    <select id="statusFilter" class="form-select">
+                        <option value="all" selected>All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="completed">Completed</option>
+                        <option value="canceled">Canceled</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="serviceFilter" class="form-label">Filter by Service</label>
+                    <select id="serviceFilter" class="form-select">
+                        <option value="all" selected>All Services</option>
+                        <option value="electrical">Electrical</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="painting">Painting</option>
+                        <option value="carpentry">Carpentry</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="dateFilter" class="form-label">Sort by Date</label>
+                    <select id="dateFilter" class="form-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-grid">
+                        <button class="btn btn-primary">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Request Cards -->
+        <div class="row g-4">
+            <!-- Request 1 - Pending -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-pending"></span>
+                            <span class="fw-bold">Pending</span>
+                        </div>
+                        <span class="text-muted">Request #1257</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Leaking Sink Repair</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-wrench me-1"></i> Plumbing</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Priority</span>
+                        </div>
+                        <p class="card-text">Kitchen sink has a slow leak that needs to be fixed.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://source.unsplash.com/random/60x60/?plumber" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">Pro Plumbing Solutions</h6>
+                                <div class="text-muted small">
+                                    <i class="fas fa-star text-warning"></i> 5.0 (89 reviews)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>May 15, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>10:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-times-circle me-1"></i> Cancel Request
+                            </button>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request 2 - Approved -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-approved"></span>
+                            <span class="fw-bold">Approved</span>
+                        </div>
+                        <span class="text-muted">Request #1249</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Light Fixture Installation</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-bolt me-1"></i> Electrical</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Standard</span>
+                        </div>
+                        <p class="card-text">Install new light fixture in the dining room.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://source.unsplash.com/random/60x60/?electrician" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">Mike's Electrical Services</h6>
+                                <div class="text-muted small">
+                                    <i class="fas fa-star text-warning"></i> 4.5 (120 reviews)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>May 17, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>2:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted small">
+                                <i class="fas fa-info-circle me-1"></i> Provider will contact you
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request 3 - Completed -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-completed"></span>
+                            <span class="fw-bold">Completed</span>
+                        </div>
+                        <span class="text-muted">Request #1238</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Deep House Cleaning</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-broom me-1"></i> Cleaning</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Standard</span>
+                        </div>
+                        <p class="card-text">Complete house cleaning service.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://source.unsplash.com/random/60x60/?cleaning" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">Sparkling Clean Co.</h6>
+                                <div class="text-muted small">
+                                    <i class="fas fa-star text-warning"></i> 4.2 (67 reviews)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>May 10, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>9:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="rating_review.html?request=1238" class="btn btn-sm btn-warning">
+                                <i class="fas fa-star me-1"></i> Leave Review
+                            </a>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request 4 - Canceled -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-canceled"></span>
+                            <span class="fw-bold">Canceled</span>
+                        </div>
+                        <span class="text-muted">Request #1231</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Furniture Assembly</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-couch me-1"></i> Furniture</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Standard</span>
+                        </div>
+                        <p class="card-text">Assembly of new bookshelf and desk.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="provider-img me-3 d-flex align-items-center justify-content-center bg-light">
+                                <i class="fas fa-user text-muted"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">No Provider Assigned</h6>
+                                <div class="text-muted small">
+                                    Canceled before assignment
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>May 5, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>11:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-danger">
+                                <i class="fas fa-exclamation-circle me-1"></i> Canceled by you
+                            </span>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request 5 - Completed -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-completed"></span>
+                            <span class="fw-bold">Completed</span>
+                        </div>
+                        <span class="text-muted">Request #1218</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Bathroom Fan Installation</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-bolt me-1"></i> Electrical</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Priority</span>
+                        </div>
+                        <p class="card-text">Replace bathroom exhaust fan with new model.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://source.unsplash.com/random/60x60/?electrician" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">Mike's Electrical Services</h6>
+                                <div class="text-muted small">
+                                    <i class="fas fa-star text-warning"></i> 4.5 (120 reviews)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>May 1, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>3:30 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <span class="ms-1">Your rating</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request 6 - Completed -->
+            <div class="col-lg-6">
+                <div class="card request-card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="status-indicator status-completed"></span>
+                            <span class="fw-bold">Completed</span>
+                        </div>
+                        <span class="text-muted">Request #1205</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Bedroom Painting</h5>
+                                <p class="text-muted mb-0"><i class="fas fa-paint-roller me-1"></i> Painting</p>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">Standard</span>
+                        </div>
+                        <p class="card-text">Paint master bedroom walls and ceiling.</p>
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://source.unsplash.com/random/60x60/?painter" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">Elite Painting Services</h6>
+                                <div class="text-muted small">
+                                    <i class="fas fa-star text-warning"></i> 4.1 (28 reviews)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-calendar-alt text-muted me-2"></i>
+                                    <span>April 25, 2023</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <i class="far fa-clock text-muted me-2"></i>
+                                    <span>8:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="fas fa-star text-warning me-1"></i>
+                                <i class="far fa-star text-warning me-1"></i>
+                                <span class="ms-1">Your rating</span>
+                            </div>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
+                                <i class="fas fa-eye me-1"></i> View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Request Details Modal -->
+    <div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Request Details #1257</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Service Information</h6>
+                            <div class="mb-2">
+                                <strong>Status:</strong> <span class="text-warning">Pending</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Service Type:</strong> Plumbing
+                            </div>
+                            <div class="mb-2">
+                                <strong>Service:</strong> Leaking Pipe Repair
+                            </div>
+                            <div class="mb-2">
+                                <strong>Date & Time:</strong> May 15, 2023 - 10:00 AM
+                            </div>
+                            <div class="mb-2">
+                                <strong>Location:</strong> Home Address (123 Main St, City)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Service Provider</h6>
+                            <div class="d-flex align-items-center">
+                                <img src="https://source.unsplash.com/random/60x60/?plumber" class="provider-img me-3" alt="Provider">
+                                <div>
+                                    <h6 class="mb-0">Pro Plumbing Solutions</h6>
+                                    <div class="mb-1">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1">5.0 (89 reviews)</span>
+                                    </div>
+                                    <div class="mb-1">
+                                        <i class="fas fa-phone me-1 text-muted"></i> (555) 123-4567
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-envelope me-1 text-muted"></i> info@proplumbing.com
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Description</h6>
+                        <p>Kitchen sink has a slow leak that needs to be fixed. Water is collecting under the sink.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Photos</h6>
+                        <div class="row g-2">
+                            <div class="col-md-3 col-6">
+                                <img src="https://source.unsplash.com/random/300x200/?sink" class="img-fluid rounded" alt="Request Photo">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Request Timeline</h6>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-plus-circle text-success me-2"></i>
+                                    <strong>Request Created</strong>
+                                </div>
+                                <span class="text-muted">May 13, 2023 - 3:45 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <strong>Request Submitted</strong>
+                                </div>
+                                <span class="text-muted">May 13, 2023 - 3:48 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-search text-info me-2"></i>
+                                    <strong>Finding Service Provider</strong>
+                                </div>
+                                <span class="text-muted">May 13, 2023 - 3:50 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-user-plus text-info me-2"></i>
+                                    <strong>Provider Found</strong> - Pro Plumbing Solutions
+                                </div>
+                                <span class="text-muted">May 13, 2023 - 4:30 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-hourglass-half text-warning me-2"></i>
+                                    <strong>Awaiting Provider Confirmation</strong>
+                                </div>
+                                <span class="text-muted">Current Status</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger me-auto">
+                        <i class="fas fa-times-circle me-1"></i> Cancel Request
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-phone me-1"></i> Contact Provider
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5><i class="fas fa-tools me-2"></i>FixPoint</h5>
+                    <p class="text-muted">Your trusted platform for local home services.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-muted">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Our Services</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Become a Provider</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Contact Info</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li><i class="fas fa-map-marker-alt me-2"></i>123 Service St, City, Country</li>
+                        <li><i class="fas fa-phone me-2"></i>(123) 456-7890</li>
+                        <li><i class="fas fa-envelope me-2"></i>info@fixpoint.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Follow Us</h6>
+                    <div class="d-flex">
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-facebook-square fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-twitter-square fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white me-2"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-decoration-none text-white"><i class="fab fa-linkedin fa-2x"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <form>
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Subscribe to newsletter">
+                                <button class="btn btn-primary" type="submit">Go</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center text-muted">
+                <small>&copy; 2023 FixPoint. All Rights Reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

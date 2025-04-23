@@ -19,7 +19,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Sync database models
-sequelize.sync({ alter: true })
+sequelize.sync()
     .then(() => console.log("All tables synchronized with MySQL"))
     .catch(err => console.error("Error syncing tables:", err));
 
