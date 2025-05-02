@@ -68,5 +68,81 @@
   </div>
 
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form'); // Adjust selector if needed
+        const emailInput = form.querySelector('input[name="email"]');
+        const passwordInput = form.querySelector('input[name="password"]');
+        // Add more fields if you want to validate them
+    
+        // Create error message elements
+        let emailError = document.createElement('p');
+        emailError.style.color = 'red';
+        emailError.style.fontSize = '0.9em';
+        emailInput.parentNode.appendChild(emailError);
+    
+        let passwordError = document.createElement('p');
+        passwordError.style.color = 'red';
+        passwordError.style.fontSize = '0.9em';
+        passwordInput.parentNode.appendChild(passwordError);
+    
+        // Email validation regex
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+    
+        // Password validation
+        function isValidPassword(password) {
+            // At least 6 chars, one uppercase, one lowercase, one digit, one special char
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/.test(password);
+        }
+    
+        // Remove error and red border on input
+        function clearError(input, errorElem) {
+            input.style.border = '';
+            errorElem.textContent = '';
+        }
+    
+        // Validate on submit
+        form.addEventListener('submit', function(e) {
+            let valid = true;
+    
+            // Email validation
+            if (!isValidEmail(emailInput.value.trim())) {
+                emailError.textContent = 'Please enter a valid email address.';
+                emailInput.style.border = '1.5px solid red';
+                valid = false;
+            } else {
+                clearError(emailInput, emailError);
+            }
+    
+            // Password validation
+            if (!isValidPassword(passwordInput.value)) {
+                passwordError.textContent = 'Password must be at least 6 characters and include uppercase, lowercase, digit, and special character.';
+                passwordInput.style.border = '1.5px solid red';
+                valid = false;
+            } else {
+                clearError(passwordInput, passwordError);
+            }
+    
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    
+        // Live validation (optional, for better UX)
+        emailInput.addEventListener('input', function() {
+            if (isValidEmail(emailInput.value.trim())) {
+                clearError(emailInput, emailError);
+            }
+        });
+        passwordInput.addEventListener('input', function() {
+            if (isValidPassword(passwordInput.value)) {
+                clearError(passwordInput, passwordError);
+            }
+        });
+    });
+    </script>
+
 </body>
 </html>

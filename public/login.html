@@ -65,5 +65,50 @@
   </div>
 
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form'); // Adjust selector if needed
+        const emailInput = form.querySelector('input[name="email"]');
+        const passwordInput = form.querySelector('input[name="password"]');
+    
+        let errorBox = document.createElement('p');
+        errorBox.style.color = 'red';
+        errorBox.style.fontSize = '0.95em';
+        form.insertBefore(errorBox, form.querySelector('button')); // Show above the button
+    
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function clearError(input) {
+            input.style.border = '';
+        }
+    
+        form.addEventListener('submit', function(e) {
+            let valid = true;
+            errorBox.textContent = '';
+    
+            if (!isValidEmail(emailInput.value.trim())) {
+                emailInput.style.border = '1.5px solid red';
+                errorBox.textContent = 'Please enter a valid email address.';
+                valid = false;
+            } else {
+                clearError(emailInput);
+            }
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+    
+        emailInput.addEventListener('input', function() {
+            if (isValidEmail(emailInput.value.trim())) {
+                clearError(emailInput);
+                errorBox.textContent = '';
+            }
+        });
+    });
+    </script>
+
+
 </body>
 </html>
