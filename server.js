@@ -5,15 +5,17 @@ const session = require("express-session");
 const passport = require("./config/pass");
 const sequelize = require("./config/database");
 const authRoutes = require("./routes/auth_routes");
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
 // Middleware
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
-app.use(express.urlencoded({ extended: false }));
 app.use(session({ secret: process.env.secret_key, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -30,6 +32,9 @@ app.get("/", (req, res) => {
 
 // Use authentication routes
 app.use("/", authRoutes);
+
+// Use user routes
+app.use('/', userRoutes);
 
 // Start the server
 const PORT = 3000;
