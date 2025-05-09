@@ -1,82 +1,84 @@
-const { Model, DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
 
-class ServiceRequest extends Model {
-  static init(sequelize) {
-    super.init({
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      },
-      category: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isIn: [['Electrical', 'Plumbing', 'Cleaning', 'Painting', 'Carpentry', 'AC Repair']]
-        }
-      },
-      serviceType: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      serviceTitle: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      },
-      status: {
-        type: DataTypes.ENUM('pending', 'accepted', 'completed', 'cancelled'),
-        defaultValue: 'pending'
-      },
-      scheduledDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-      },
-      preferredTime: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      alternateDate: {
-        type: DataTypes.DATE,
-        allowNull: true
-      },
-      urgencyLevel: {
-        type: DataTypes.ENUM('Standard (3-5 days)', 'Priority (1-2 days)', 'Emergency (Same day)'),
-        defaultValue: 'Standard (3-5 days)'
-      },
-      location: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      photos: {
-        type: DataTypes.JSON,
-        allowNull: true
-      }
-    }, {
-      sequelize,
-      modelName: 'ServiceRequest',
-      tableName: 'ServiceRequests'
-    });
-  }
+const serviceRequestSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    serviceType: {
+        type: String,
+        required: true
+    },
+    serviceTitle: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    scheduledDate: {
+        type: Date,
+        required: true
+    },
+    preferredTime: {
+        type: String,
+        required: true
+    },
+    alternateDate: {
+        type: Date
+    },
+    urgencyLevel: {
+        type: String,
+        required: true,
+        enum: ['Standard (3-5 days)', 'Priority (1-2 days)', 'Emergency (Same day)']
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    photos: {
+        type: [String]
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'in progress', 'completed', 'canceled'],
+        default: 'pending'
+    },
+    providerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    providerAssignedDate: {
+        type: Date
+    },
+    approvedDate: {
+        type: Date
+    },
+    completedDate: {
+        type: Date
+    },
+    canceledDate: {
+        type: Date
+    },
+    canceledBy: {
+        type: String,
+        enum: ['user', 'provider', 'admin', 'system']
+    },
+    price: {
+        type: Number
+    },
+    isPaid: {
+        type: Boolean,
+        default: false
+    }
+}, { timestamps: true });
 
-  static associate(models) {
-    this.belongsTo(models.User, {
-      foreignKey: 'userId',
-      as: 'user'
-    });
-  }
-}
+const ServiceRequest = mongoose.model('ServiceRequest', serviceRequestSchema);
 
 module.exports = ServiceRequest;

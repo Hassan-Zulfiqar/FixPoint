@@ -1,48 +1,35 @@
-const { Model, DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-class ServiceProvider extends Model {
-  static init(sequelize) {
-    super.init({
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true
-      },
-      service_type: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-      },
-      licence_doc: {
-        type: DataTypes.STRING(255),
-        allowNull: true
-      },
-      address: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      },
-      approved_by_admin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      }
-    }, {
-      sequelize,
-      modelName: 'ServiceProvider',
-      tableName: 'ServiceProviders',
-      timestamps: true
-    });
+const ServiceProviderSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  service_type: {
+    type: String,
+    required: true
+  },
+  licence_doc: {
+    type: String
+  },
+  address: {
+    type: String,
+    required: true
+  },
+  approved_by_admin: {
+    type: Boolean,
+    default: false
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
+});
 
-  static associate(models) {
-    this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user'
-    });
-  }
-}
-
-module.exports = ServiceProvider;
+module.exports = mongoose.model('ServiceProvider', ServiceProviderSchema);

@@ -158,362 +158,39 @@
                 </div>
                 <div class="col-md-3">
                     <div class="d-grid">
-                        <button class="btn btn-primary">Apply Filters</button>
+                        <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Loading indicator -->
+        <div id="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading your service requests...</p>
+        </div>
+
+        <!-- No requests message -->
+        <div id="noRequests" class="text-center py-5 d-none">
+            <i class="fas fa-clipboard-list fa-4x text-muted mb-3"></i>
+            <h4>No service requests found</h4>
+            <p class="text-muted">You haven't made any service requests yet.</p>
+            <a href="request_service.html" class="btn btn-primary mt-3">
+                <i class="fas fa-plus-circle me-2"></i>Request a Service
+            </a>
+        </div>
+
         <!-- Request Cards -->
-        <div class="row g-4">
-            <!-- Request 1 - Pending -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-pending"></span>
-                            <span class="fw-bold">Pending</span>
-                        </div>
-                        <span class="text-muted">Request #1257</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Leaking Sink Repair</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-wrench me-1"></i> Plumbing</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Priority</span>
-                        </div>
-                        <p class="card-text">Kitchen sink has a slow leak that needs to be fixed.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://source.unsplash.com/random/60x60/?plumber" class="provider-img me-3" alt="Provider">
-                            <div>
-                                <h6 class="mb-0">Pro Plumbing Solutions</h6>
-                                <div class="text-muted small">
-                                    <i class="fas fa-star text-warning"></i> 5.0 (89 reviews)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>May 15, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>10:00 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="fas fa-times-circle me-1"></i> Cancel Request
-                            </button>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Request 2 - Approved -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-approved"></span>
-                            <span class="fw-bold">Approved</span>
-                        </div>
-                        <span class="text-muted">Request #1249</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Light Fixture Installation</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-bolt me-1"></i> Electrical</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Standard</span>
-                        </div>
-                        <p class="card-text">Install new light fixture in the dining room.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://source.unsplash.com/random/60x60/?electrician" class="provider-img me-3" alt="Provider">
-                            <div>
-                                <h6 class="mb-0">Mike's Electrical Services</h6>
-                                <div class="text-muted small">
-                                    <i class="fas fa-star text-warning"></i> 4.5 (120 reviews)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>May 17, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>2:00 PM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="text-muted small">
-                                <i class="fas fa-info-circle me-1"></i> Provider will contact you
-                            </div>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Request 3 - Completed -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-completed"></span>
-                            <span class="fw-bold">Completed</span>
-                        </div>
-                        <span class="text-muted">Request #1238</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Deep House Cleaning</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-broom me-1"></i> Cleaning</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Standard</span>
-                        </div>
-                        <p class="card-text">Complete house cleaning service.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://source.unsplash.com/random/60x60/?cleaning" class="provider-img me-3" alt="Provider">
-                            <div>
-                                <h6 class="mb-0">Sparkling Clean Co.</h6>
-                                <div class="text-muted small">
-                                    <i class="fas fa-star text-warning"></i> 4.2 (67 reviews)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>May 10, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>9:00 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="rating_review.html?request=1238" class="btn btn-sm btn-warning">
-                                <i class="fas fa-star me-1"></i> Leave Review
-                            </a>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Request 4 - Canceled -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-canceled"></span>
-                            <span class="fw-bold">Canceled</span>
-                        </div>
-                        <span class="text-muted">Request #1231</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Furniture Assembly</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-couch me-1"></i> Furniture</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Standard</span>
-                        </div>
-                        <p class="card-text">Assembly of new bookshelf and desk.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="provider-img me-3 d-flex align-items-center justify-content-center bg-light">
-                                <i class="fas fa-user text-muted"></i>
-                            </div>
-                            <div>
-                                <h6 class="mb-0">No Provider Assigned</h6>
-                                <div class="text-muted small">
-                                    Canceled before assignment
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>May 5, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>11:00 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="text-danger">
-                                <i class="fas fa-exclamation-circle me-1"></i> Canceled by you
-                            </span>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Request 5 - Completed -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-completed"></span>
-                            <span class="fw-bold">Completed</span>
-                        </div>
-                        <span class="text-muted">Request #1218</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Bathroom Fan Installation</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-bolt me-1"></i> Electrical</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Priority</span>
-                        </div>
-                        <p class="card-text">Replace bathroom exhaust fan with new model.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://source.unsplash.com/random/60x60/?electrician" class="provider-img me-3" alt="Provider">
-                            <div>
-                                <h6 class="mb-0">Mike's Electrical Services</h6>
-                                <div class="text-muted small">
-                                    <i class="fas fa-star text-warning"></i> 4.5 (120 reviews)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>May 1, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>3:30 PM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <span class="ms-1">Your rating</span>
-                            </div>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Request 6 - Completed -->
-            <div class="col-lg-6">
-                <div class="card request-card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="status-indicator status-completed"></span>
-                            <span class="fw-bold">Completed</span>
-                        </div>
-                        <span class="text-muted">Request #1205</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="card-title mb-1">Bedroom Painting</h5>
-                                <p class="text-muted mb-0"><i class="fas fa-paint-roller me-1"></i> Painting</p>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Standard</span>
-                        </div>
-                        <p class="card-text">Paint master bedroom walls and ceiling.</p>
-                        <div class="d-flex align-items-center mb-3">
-                            <img src="https://source.unsplash.com/random/60x60/?painter" class="provider-img me-3" alt="Provider">
-                            <div>
-                                <h6 class="mb-0">Elite Painting Services</h6>
-                                <div class="text-muted small">
-                                    <i class="fas fa-star text-warning"></i> 4.1 (28 reviews)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-calendar-alt text-muted me-2"></i>
-                                    <span>April 25, 2023</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="d-flex align-items-center">
-                                    <i class="far fa-clock text-muted me-2"></i>
-                                    <span>8:00 AM</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="fas fa-star text-warning me-1"></i>
-                                <i class="far fa-star text-warning me-1"></i>
-                                <span class="ms-1">Your rating</span>
-                            </div>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal">
-                                <i class="fas fa-eye me-1"></i> View Details
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-4" id="requestsContainer">
+            <!-- Service request cards will be dynamically inserted here -->
         </div>
 
         <!-- Pagination -->
         <nav class="mt-5">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Pagination will be dynamically generated -->
             </ul>
         </nav>
     </div>
@@ -523,117 +200,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Request Details #1257</h5>
+                    <h5 class="modal-title" id="modalTitle">Request Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h6>Service Information</h6>
-                            <div class="mb-2">
-                                <strong>Status:</strong> <span class="text-warning">Pending</span>
-                            </div>
-                            <div class="mb-2">
-                                <strong>Service Type:</strong> Plumbing
-                            </div>
-                            <div class="mb-2">
-                                <strong>Service:</strong> Leaking Pipe Repair
-                            </div>
-                            <div class="mb-2">
-                                <strong>Date & Time:</strong> May 15, 2023 - 10:00 AM
-                            </div>
-                            <div class="mb-2">
-                                <strong>Location:</strong> Home Address (123 Main St, City)
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Service Provider</h6>
-                            <div class="d-flex align-items-center">
-                                <img src="https://source.unsplash.com/random/60x60/?plumber" class="provider-img me-3" alt="Provider">
-                                <div>
-                                    <h6 class="mb-0">Pro Plumbing Solutions</h6>
-                                    <div class="mb-1">
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <span class="ms-1">5.0 (89 reviews)</span>
-                                    </div>
-                                    <div class="mb-1">
-                                        <i class="fas fa-phone me-1 text-muted"></i> (555) 123-4567
-                                    </div>
-                                    <div>
-                                        <i class="fas fa-envelope me-1 text-muted"></i> info@proplumbing.com
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h6>Description</h6>
-                        <p>Kitchen sink has a slow leak that needs to be fixed. Water is collecting under the sink.</p>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h6>Photos</h6>
-                        <div class="row g-2">
-                            <div class="col-md-3 col-6">
-                                <img src="https://source.unsplash.com/random/300x200/?sink" class="img-fluid rounded" alt="Request Photo">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <h6>Request Timeline</h6>
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <i class="fas fa-plus-circle text-success me-2"></i>
-                                    <strong>Request Created</strong>
-                                </div>
-                                <span class="text-muted">May 13, 2023 - 3:45 PM</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <i class="fas fa-check-circle text-primary me-2"></i>
-                                    <strong>Request Submitted</strong>
-                                </div>
-                                <span class="text-muted">May 13, 2023 - 3:48 PM</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <i class="fas fa-search text-info me-2"></i>
-                                    <strong>Finding Service Provider</strong>
-                                </div>
-                                <span class="text-muted">May 13, 2023 - 3:50 PM</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <i class="fas fa-user-plus text-info me-2"></i>
-                                    <strong>Provider Found</strong> - Pro Plumbing Solutions
-                                </div>
-                                <span class="text-muted">May 13, 2023 - 4:30 PM</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <i class="fas fa-hourglass-half text-warning me-2"></i>
-                                    <strong>Awaiting Provider Confirmation</strong>
-                                </div>
-                                <span class="text-muted">Current Status</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Modal content will be dynamically inserted here -->
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger me-auto">
-                        <i class="fas fa-times-circle me-1"></i> Cancel Request
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">
-                        <i class="fas fa-phone me-1"></i> Contact Provider
-                    </button>
+                <div class="modal-footer" id="modalFooter">
+                    <!-- Modal footer buttons will be dynamically inserted here -->
                 </div>
             </div>
         </div>
@@ -691,5 +265,637 @@
 
     <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Add JavaScript to fetch and display the data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial variables
+            let currentPage = 1;
+            const itemsPerPage = 6;
+            let totalRequests = 0;
+            let allRequests = [];
+            
+            // Elements
+            const requestsContainer = document.getElementById('requestsContainer');
+            const loading = document.getElementById('loading');
+            const noRequests = document.getElementById('noRequests');
+            const pagination = document.getElementById('pagination');
+            const statusFilter = document.getElementById('statusFilter');
+            const serviceFilter = document.getElementById('serviceFilter');
+            const dateFilter = document.getElementById('dateFilter');
+            const applyFiltersBtn = document.getElementById('applyFilters');
+            
+            // Fetch service requests
+            fetchServiceRequests();
+            
+            // Add event listener for filter button
+            applyFiltersBtn.addEventListener('click', function() {
+                currentPage = 1;
+                filterAndDisplayRequests();
+            });
+            
+            // Function to fetch service requests
+            async function fetchServiceRequests() {
+                try {
+                    const response = await fetch('/api/user/service-requests', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch service requests');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        allRequests = data.data;
+                        totalRequests = data.data.length;
+                        
+                        // Hide loading indicator
+                        loading.classList.add('d-none');
+                        
+                        // Display requests or show "no requests" message
+                        if (totalRequests > 0) {
+                            filterAndDisplayRequests();
+                        } else {
+                            noRequests.classList.remove('d-none');
+                        }
+                    } else {
+                        throw new Error(data.message || 'Failed to fetch service requests');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    loading.classList.add('d-none');
+                    requestsContainer.innerHTML = `
+                        <div class="col-12 text-center">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Error loading service requests. Please try again later.
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Filter and display requests
+            function filterAndDisplayRequests() {
+                const status = statusFilter.value;
+                const serviceType = serviceFilter.value;
+                const dateSort = dateFilter.value;
+                
+                // Filter requests
+                let filteredRequests = allRequests;
+                
+                if (status !== 'all') {
+                    filteredRequests = filteredRequests.filter(request => request.status.toLowerCase() === status);
+                }
+                
+                if (serviceType !== 'all') {
+                    filteredRequests = filteredRequests.filter(request => request.category.toLowerCase() === serviceType);
+                }
+                
+                // Sort requests
+                if (dateSort === 'newest') {
+                    filteredRequests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                } else {
+                    filteredRequests.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                }
+                
+                // Calculate pagination
+                const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = Math.min(startIndex + itemsPerPage, filteredRequests.length);
+                const currentRequests = filteredRequests.slice(startIndex, endIndex);
+                
+                // Display requests
+                displayRequests(currentRequests);
+                
+                // Update pagination
+                updatePagination(totalPages);
+                
+                // Show or hide "no requests" message
+                if (filteredRequests.length === 0) {
+                    noRequests.classList.remove('d-none');
+                } else {
+                    noRequests.classList.add('d-none');
+                }
+            }
+            
+            // Display requests
+            function displayRequests(requests) {
+                requestsContainer.innerHTML = '';
+                
+                requests.forEach(request => {
+                    const statusClass = getStatusClass(request.status);
+                    const statusText = getStatusText(request.status);
+                    const date = new Date(request.scheduledDate);
+                    const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    const formattedTime = request.preferredTime;
+                    
+                    // Create provider HTML based on whether a provider is assigned
+                    let providerHtml = '';
+                    if (request.providerId) {
+                        providerHtml = `
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="${request.providerImage || 'https://source.unsplash.com/random/60x60/?service'}" class="provider-img me-3" alt="Provider">
+                                <div>
+                                    <h6 class="mb-0">${request.providerName || 'Assigned Provider'}</h6>
+                                    <div class="text-muted small">
+                                        <i class="fas fa-star text-warning"></i> ${request.providerRating || '4.5'} (${request.providerReviews || '0'} reviews)
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        providerHtml = `
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="provider-img me-3 d-flex align-items-center justify-content-center bg-light">
+                                    <i class="fas fa-user text-muted"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0">No Provider Assigned</h6>
+                                    <div class="text-muted small">
+                                        Waiting for provider assignment
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    // Create actions based on status
+                    let actionsHtml = '';
+                    if (request.status === 'completed' && !request.userReview) {
+                        actionsHtml = `
+                            <a href="rating_review.html?request=${request._id}" class="btn btn-sm btn-warning">
+                                <i class="fas fa-star me-1"></i> Leave Review
+                            </a>
+                        `;
+                    } else if (request.status === 'completed' && request.userReview) {
+                        actionsHtml = `
+                            <div class="d-flex align-items-center">
+                                ${Array(request.userRating || 5).fill('<i class="fas fa-star text-warning me-1"></i>').join('')}
+                                ${Array(5 - (request.userRating || 5)).fill('<i class="far fa-star text-warning me-1"></i>').join('')}
+                                <span class="ms-1">Your rating</span>
+                            </div>
+                        `;
+                    } else if (request.status === 'pending') {
+                        actionsHtml = `
+                            <button class="btn btn-sm btn-outline-danger cancel-request" data-id="${request._id}">
+                                <i class="fas fa-times-circle me-1"></i> Cancel Request
+                            </button>
+                        `;
+                    } else if (request.status === 'canceled') {
+                        actionsHtml = `
+                            <span class="text-danger">
+                                <i class="fas fa-exclamation-circle me-1"></i> Canceled by ${request.canceledBy || 'you'}
+                            </span>
+                        `;
+                    } else if (request.status === 'approved') {
+                        actionsHtml = `
+                            <div class="text-muted small">
+                                <i class="fas fa-info-circle me-1"></i> Provider will contact you
+                            </div>
+                        `;
+                    }
+                    
+                    const requestCard = `
+                        <div class="col-lg-6">
+                            <div class="card request-card h-100">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span class="status-indicator ${statusClass}"></span>
+                                        <span class="fw-bold">${statusText}</span>
+                                    </div>
+                                    <span class="text-muted">Request #${request._id.substring(0, 4)}</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <h5 class="card-title mb-1">${request.serviceTitle}</h5>
+                                            <p class="text-muted mb-0"><i class="fas fa-${getCategoryIcon(request.category)} me-1"></i> ${request.category}</p>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">${request.urgencyLevel.split(' ')[0]}</span>
+                                    </div>
+                                    <p class="card-text">${request.description.substring(0, 100)}${request.description.length > 100 ? '...' : ''}</p>
+                                    ${providerHtml}
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <i class="far fa-calendar-alt text-muted me-2"></i>
+                                                <span>${formattedDate}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center">
+                                                <i class="far fa-clock text-muted me-2"></i>
+                                                <span>${formattedTime}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        ${actionsHtml}
+                                        <button class="btn btn-sm btn-primary view-details" data-id="${request._id}">
+                                            <i class="fas fa-eye me-1"></i> View Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    requestsContainer.innerHTML += requestCard;
+                });
+                
+                // Add event listeners for buttons
+                document.querySelectorAll('.view-details').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const requestId = this.getAttribute('data-id');
+                        showRequestDetails(requestId);
+                    });
+                });
+                
+                document.querySelectorAll('.cancel-request').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const requestId = this.getAttribute('data-id');
+                        cancelRequest(requestId);
+                    });
+                });
+            }
+            
+            // Update pagination
+            function updatePagination(totalPages) {
+                pagination.innerHTML = '';
+                
+                if (totalPages <= 1) {
+                    pagination.parentElement.classList.add('d-none');
+                    return;
+                }
+                
+                pagination.parentElement.classList.remove('d-none');
+                
+                // Previous button
+                const prevLi = document.createElement('li');
+                prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+                prevLi.innerHTML = `<a class="page-link" href="#" tabindex="-1" ${currentPage === 1 ? 'aria-disabled="true"' : ''}>Previous</a>`;
+                pagination.appendChild(prevLi);
+                
+                if (currentPage > 1) {
+                    prevLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage--;
+                        filterAndDisplayRequests();
+                        window.scrollTo(0, 0);
+                    });
+                }
+                
+                // Page numbers
+                for (let i = 1; i <= totalPages; i++) {
+                    const li = document.createElement('li');
+                    li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                    pagination.appendChild(li);
+                    
+                    li.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage = i;
+                        filterAndDisplayRequests();
+                        window.scrollTo(0, 0);
+                    });
+                }
+                
+                // Next button
+                const nextLi = document.createElement('li');
+                nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+                nextLi.innerHTML = `<a class="page-link" href="#" ${currentPage === totalPages ? 'aria-disabled="true"' : ''}>Next</a>`;
+                pagination.appendChild(nextLi);
+                
+                if (currentPage < totalPages) {
+                    nextLi.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        currentPage++;
+                        filterAndDisplayRequests();
+                        window.scrollTo(0, 0);
+                    });
+                }
+            }
+            
+            // Show request details in modal
+            async function showRequestDetails(requestId) {
+                const request = allRequests.find(req => req._id === requestId);
+                if (!request) return;
+                
+                // Format date
+                const date = new Date(request.scheduledDate);
+                const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                
+                // Get status class and text
+                const statusClass = getStatusColorClass(request.status);
+                
+                // Create timeline HTML
+                let timelineHtml = `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-plus-circle text-success me-2"></i>
+                            <strong>Request Created</strong>
+                        </div>
+                        <span class="text-muted">${new Date(request.createdAt).toLocaleString()}</span>
+                    </li>
+                `;
+                
+                // Add timeline events based on status
+                if (request.status !== 'pending' && request.status !== 'canceled') {
+                    timelineHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-user-plus text-info me-2"></i>
+                                <strong>Provider Assigned</strong> - ${request.providerName || 'Service Provider'}
+                            </div>
+                            <span class="text-muted">${request.providerAssignedDate ? new Date(request.providerAssignedDate).toLocaleString() : 'N/A'}</span>
+                        </li>
+                    `;
+                }
+                
+                if (request.status === 'approved') {
+                    timelineHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-check-circle text-primary me-2"></i>
+                                <strong>Request Approved</strong>
+                            </div>
+                            <span class="text-muted">${request.approvedDate ? new Date(request.approvedDate).toLocaleString() : 'N/A'}</span>
+                        </li>
+                    `;
+                }
+                
+                if (request.status === 'completed') {
+                    timelineHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-check-double text-success me-2"></i>
+                                <strong>Service Completed</strong>
+                            </div>
+                            <span class="text-muted">${request.completedDate ? new Date(request.completedDate).toLocaleString() : 'N/A'}</span>
+                        </li>
+                    `;
+                }
+                
+                if (request.status === 'canceled') {
+                    timelineHtml += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <i class="fas fa-times-circle text-danger me-2"></i>
+                                <strong>Request Canceled</strong> - by ${request.canceledBy || 'you'}
+                            </div>
+                            <span class="text-muted">${request.canceledDate ? new Date(request.canceledDate).toLocaleString() : 'N/A'}</span>
+                        </li>
+                    `;
+                }
+                
+                // Current status
+                timelineHtml += `
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas ${getStatusIcon(request.status)} ${statusClass} me-2"></i>
+                            <strong>Current Status: ${getStatusText(request.status)}</strong>
+                        </div>
+                        <span class="text-muted">Updated: ${new Date(request.updatedAt).toLocaleString()}</span>
+                    </li>
+                `;
+                
+                // Create photos HTML
+                let photosHtml = '';
+                if (request.photos && request.photos.length > 0) {
+                    photosHtml = '<div class="row g-2">';
+                    request.photos.forEach(photo => {
+                        photosHtml += `
+                            <div class="col-md-3 col-6">
+                                <img src="${photo}" class="img-fluid rounded" alt="Request Photo">
+                            </div>
+                        `;
+                    });
+                    photosHtml += '</div>';
+                } else {
+                    photosHtml = '<p class="text-muted">No photos provided</p>';
+                }
+                
+                // Provider HTML
+                let providerHtml = '';
+                if (request.providerId) {
+                    providerHtml = `
+                        <div class="d-flex align-items-center">
+                            <img src="${request.providerImage || 'https://source.unsplash.com/random/60x60/?service'}" class="provider-img me-3" alt="Provider">
+                            <div>
+                                <h6 class="mb-0">${request.providerName || 'Service Provider'}</h6>
+                                <div class="mb-1">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star-half-alt text-warning"></i>
+                                    <span class="ms-1">${request.providerRating || '4.5'} (${request.providerReviews || '0'} reviews)</span>
+                                </div>
+                                <div class="mb-1">
+                                    <i class="fas fa-phone me-1 text-muted"></i> ${request.providerPhone || 'Not available'}
+                                </div>
+                                <div>
+                                    <i class="fas fa-envelope me-1 text-muted"></i> ${request.providerEmail || 'Not available'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    providerHtml = '<p class="text-muted">No provider assigned yet</p>';
+                }
+                
+                // Modal content
+                const modalContent = `
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Service Information</h6>
+                            <div class="mb-2">
+                                <strong>Status:</strong> <span class="${statusClass}">${getStatusText(request.status)}</span>
+                            </div>
+                            <div class="mb-2">
+                                <strong>Service Type:</strong> ${request.category}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Service:</strong> ${request.serviceType}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Date & Time:</strong> ${formattedDate} - ${request.preferredTime}
+                            </div>
+                            <div class="mb-2">
+                                <strong>Location:</strong> ${request.location}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Service Provider</h6>
+                            ${providerHtml}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Description</h6>
+                        <p>${request.description}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Photos</h6>
+                        ${photosHtml}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Request Timeline</h6>
+                        <ul class="list-group">
+                            ${timelineHtml}
+                        </ul>
+                    </div>
+                `;
+                
+                // Modal footer
+                let modalFooterHtml = `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`;
+                
+                if (request.status === 'pending') {
+                    modalFooterHtml = `
+                        <button type="button" class="btn btn-outline-danger me-auto" onclick="cancelRequestFromModal('${request._id}')">
+                            <i class="fas fa-times-circle me-1"></i> Cancel Request
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    `;
+                } else if (request.status === 'approved' || request.status === 'in progress') {
+                    modalFooterHtml = `
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="contactProvider('${request._id}')">
+                            <i class="fas fa-phone me-1"></i> Contact Provider
+                        </button>
+                    `;
+                }
+                
+                // Update modal
+                document.getElementById('modalTitle').textContent = `Request Details #${request._id.substring(0, 4)}`;
+                document.getElementById('modalBody').innerHTML = modalContent;
+                document.getElementById('modalFooter').innerHTML = modalFooterHtml;
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('requestDetailsModal'));
+                modal.show();
+            }
+            
+            // Cancel request
+            async function cancelRequest(requestId) {
+                if (!confirm('Are you sure you want to cancel this service request?')) {
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/api/service-requests/${requestId}/cancel`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to cancel request');
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Update the request in our local array
+                        const index = allRequests.findIndex(req => req._id === requestId);
+                        if (index !== -1) {
+                            allRequests[index].status = 'canceled';
+                            allRequests[index].canceledBy = 'you';
+                            allRequests[index].canceledDate = new Date().toISOString();
+                        }
+                        
+                        // Refresh the display
+                        filterAndDisplayRequests();
+                        
+                        alert('Service request canceled successfully');
+                    } else {
+                        throw new Error(data.message || 'Failed to cancel request');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error canceling request: ' + error.message);
+                }
+            }
+            
+            // Helper functions
+            function getStatusClass(status) {
+                switch (status.toLowerCase()) {
+                    case 'pending': return 'status-pending';
+                    case 'approved': return 'status-approved';
+                    case 'completed': return 'status-completed';
+                    case 'canceled': return 'status-canceled';
+                    default: return '';
+                }
+            }
+            
+            function getStatusColorClass(status) {
+                switch (status.toLowerCase()) {
+                    case 'pending': return 'text-warning';
+                    case 'approved': return 'text-primary';
+                    case 'completed': return 'text-success';
+                    case 'canceled': return 'text-danger';
+                    default: return '';
+                }
+            }
+            
+            function getStatusText(status) {
+                switch (status.toLowerCase()) {
+                    case 'pending': return 'Pending';
+                    case 'approved': return 'Approved';
+                    case 'completed': return 'Completed';
+                    case 'canceled': return 'Canceled';
+                    default: return status;
+                }
+            }
+            
+            function getStatusIcon(status) {
+                switch (status.toLowerCase()) {
+                    case 'pending': return 'fa-hourglass-half';
+                    case 'approved': return 'fa-check-circle';
+                    case 'completed': return 'fa-check-double';
+                    case 'canceled': return 'fa-times-circle';
+                    default: return 'fa-info-circle';
+                }
+            }
+            
+            function getCategoryIcon(category) {
+                switch (category.toLowerCase()) {
+                    case 'electrical': return 'bolt';
+                    case 'plumbing': return 'wrench';
+                    case 'cleaning': return 'broom';
+                    case 'painting': return 'paint-roller';
+                    case 'carpentry': return 'hammer';
+                    case 'ac repair': return 'snowflake';
+                    default: return 'tools';
+                }
+            }
+        });
+        
+        // Global functions needed for modal buttons
+        function cancelRequestFromModal(requestId) {
+            const cancelRequest = document.querySelector(`.cancel-request[data-id="${requestId}"]`);
+            if (cancelRequest) {
+                cancelRequest.click();
+            }
+            const modal = bootstrap.Modal.getInstance(document.getElementById('requestDetailsModal'));
+            modal.hide();
+        }
+        
+        function contactProvider(requestId) {
+            // This would typically open a contact form or display contact info
+            alert('Provider contact functionality will be implemented here');
+        }
+    </script>
 </body>
 </html>

@@ -3,11 +3,14 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("./config/pass");
-const sequelize = require("./config/database");
+const connectDB = require("./config/database");
 const authRoutes = require("./routes/auth_routes");
 const userRoutes = require('./routes/userRoutes');
 
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
@@ -16,14 +19,16 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
-app.use(session({ secret: process.env.secret_key, resave: false, saveUninitialized: false }));
+app.use(session({ 
+    secret: process.env.secret_key, 
+    resave: false, 
+    saveUninitialized: false 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Sync database models
-sequelize.sync()
-    .then(() => console.log("All tables synchronized with MySQL"))
-    .catch(err => console.error("Error syncing tables:", err));
+// Use API routes first with proper prefix
+app.use('/api/user', userRoutes);
 
 // Serve HTML file
 app.get("/", (req, res) => {
@@ -33,11 +38,8 @@ app.get("/", (req, res) => {
 // Use authentication routes
 app.use("/", authRoutes);
 
-// Use user routes
-app.use('/', userRoutes);
-
 // Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

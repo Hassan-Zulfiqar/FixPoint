@@ -1,10 +1,35 @@
-const isAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+const User = require('../models/User');
+
+exports.isAuthenticated = async (req, res, next) => {
+    // Check if user is authenticated via session
+    if (req.isAuthenticated && req.isAuthenticated()) {
         return next();
     }
-    res.status(401).json({ message: 'Please login to access this resource' });
+    
+    // If no valid session, return error
+    res.status(401).json({
+        success: false,
+        message: 'Please login to access this resource'
+    });
 };
 
-module.exports = {
-    isAuthenticated
+exports.isAdmin = async (req, res, next) => {
+    // First check if authenticated
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+        return res.status(401).json({
+            success: false,
+            message: 'Please login to access this resource'
+        });
+    }
+    
+    // Then check if user is admin
+    if (req.user && req.user.role === 'admin') {
+        return next();
+    }
+    
+    // If not admin, return error
+    res.status(403).json({
+        success: false,
+        message: 'Access denied: Admin privileges required'
+    });
 };

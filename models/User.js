@@ -1,74 +1,57 @@
-const { Model, DataTypes } = require('sequelize');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-class User extends Model {
-  static init(sequelize) {
-    super.init({
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
-      name: {
-        type: DataTypes.STRING(100),
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        unique: { name: "unique_email", msg: "Email must be unique" }
-      },
-      password: {
-        type: DataTypes.STRING(255),
-        allowNull: false
-      },
-      contact: {
-        type: DataTypes.STRING(11),
-        allowNull: false
-      },
-      profile_pic: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue: "/uploads/default.jpg"
-      },
-      user_type: {
-        type: DataTypes.ENUM("customer", "service_provider"),
-        allowNull: false
-      },
-      is_verified: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
-      verification_token: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      resetToken: {
-        type: DataTypes.STRING,
-        allowNull: true
-      },
-      resetTokenExpires: {
-        type: DataTypes.DATE,
-        allowNull: true
-      }
-    }, {
-      sequelize,
-      modelName: 'User',
-      tableName: 'Users',
-      timestamps: true
-    });
+const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  contact: {
+    type: String,
+    required: true
+  },
+  profile_pic: {
+    type: String,
+    default: "/uploads/default.jpg"
+  },
+  user_type: {
+    type: String,
+    enum: ["customer", "service_provider"],
+    required: true
+  },
+  is_verified: {
+    type: Boolean,
+    default: false
+  },
+  verification_token: {
+    type: String,
+    default: null
+  },
+  resetToken: {
+    type: String,
+    default: null
+  },
+  resetTokenExpires: {
+    type: Date,
+    default: null
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
+});
 
-  static associate(models) {
-    this.hasMany(models.ServiceRequest, {
-      foreignKey: 'userId',
-      as: 'serviceRequests'
-    });
-    
-    this.hasOne(models.ServiceProvider, {
-      foreignKey: 'user_id',
-      as: 'serviceProvider'
-    });
-  }
-}
-
-module.exports = User;
+module.exports = mongoose.model('User', UserSchema);
