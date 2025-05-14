@@ -15,7 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(function (data) {
             if (data.message === "Login successful!") {
-                window.location.href = "/user/user_dashboard.html"; // Redirect on success
+                // Redirect based on user type
+                if (data.user_type === "service_provider") {
+                    window.location.href = "/service/provider_dashboard.html";
+                } else {
+                    // Default for customer user type
+                    window.location.href = "/user/user_dashboard.html";
+                }
             } else {
                 document.getElementById("error-message").textContent = data.message; // Show error in <p>
             }

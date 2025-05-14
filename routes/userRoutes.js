@@ -4,14 +4,18 @@ const userController = require('../controllers/userController');
 const { isAuthenticated } = require('../middleware/auth');
 
 // User service request routes
-router.post('/service-request', isAuthenticated, userController.submitServiceRequest);
+router.post('/service-requests', isAuthenticated, userController.submitServiceRequest);
 router.get('/service-requests', isAuthenticated, userController.getUserServiceRequests);
 router.get('/service-requests/:id', isAuthenticated, userController.getServiceRequestById);
-router.put('/service-requests/:id/cancel', isAuthenticated, userController.cancelServiceRequest);
+router.delete('/service-requests/:id', isAuthenticated, userController.cancelServiceRequest);
 
 // User profile routes
 router.get('/profile', isAuthenticated, userController.getUserProfile);
 router.put('/profile', isAuthenticated, userController.updateUserProfile);
+router.patch('/profile', isAuthenticated, userController.updateUserProfile);
+
+// Password change route
+router.post('/change-password', isAuthenticated, userController.changePassword);
 
 // User review routes
 router.post('/reviews', isAuthenticated, userController.submitReview);

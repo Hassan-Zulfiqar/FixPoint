@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const path = require("path");
 const authController = require("../controllers/auth_controllers");
+const userController = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -23,5 +24,8 @@ router.get("/logout", authController.logout);
 router.post("/forgot-password", authController.forgotPassword);
 router.post("/reset-password/:token", authController.resetPassword);
 router.get("/dashboard", authController.checkAuth);
+
+// User profile routes
+router.post("/update-profile-pic", upload.single("profilePic"), userController.updateProfilePic);
 
 module.exports = router;

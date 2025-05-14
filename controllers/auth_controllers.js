@@ -29,7 +29,8 @@ transporter.verify(function(error, success) {
 exports.signup = async (req, res) => {
     try {
         const { name, email, password, contact, user_type } = req.body;
-        const profile_pic = req.file ? "/uploads/" + req.file.filename : null;
+        // Set default profile pic to dummy.png if no file is uploaded
+        const profile_pic = req.file ? "/uploads/" + req.file.filename : "/uploads/dummy.png";
 
         // Check if email exists
         const existingUser = await User.findOne({ email });
@@ -144,7 +145,10 @@ exports.login = function (req, res, next) {
                 if (err) {
                     return next(err);
                 }
-                return res.json({ message: "Login successful!" });
+                return res.json({ 
+                    message: "Login successful!",
+                    user_type: user.user_type 
+                });
             });
         } catch (error) {
             console.error("Login Error:", error);
@@ -159,7 +163,7 @@ exports.logout = function (req, res) {
         if (err) {
             return next(err);
         }
-        res.redirect("/login");
+        res.redirect("/login.html");
     });
 };
 

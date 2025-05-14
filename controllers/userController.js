@@ -3,6 +3,7 @@ const path = require('path');
 const ServiceRequest = require('../models/ServiceRequest');
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -348,6 +349,103 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error updating user profile',
+      error: error.message
+    });
+  }
+};
+
+// Change password
+exports.changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    
+    // Validate input
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Current and new password are required'
+      });
+    }
+    
+    // Get user from database
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+    
+    // Verify current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Current password is incorrect'
+      });
+    }
+    
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    
+    // Update user with new password
+    user.password = hashedPassword;
+    await user.save();
+    
+    res.json({
+      success: true,
+      message: 'Password updated successfully'
+    });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating password',
+      error: error.message
+    });
+  }
+};
+
+// Update profile picture
+exports.updateProfilePic = async (req, res) => {
+  try {
+    // Check if file was uploaded
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No image file provided'
+      });
+    }
+
+    // Get file path to save in DB
+    const profilePicPath = `/uploads/${req.file.filename}`;
+
+    // Update user's profile picture in database
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { profile_pic: profilePicPath },
+      { new: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Return success response
+    res.json({
+      success: true,
+      message: 'Profile picture updated successfully',
+      photoUrl: profilePicPath,
+      data: { profile_pic: user.profile_pic }
+    });
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating profile picture',
       error: error.message
     });
   }

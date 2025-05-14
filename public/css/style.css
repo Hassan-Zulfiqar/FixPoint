@@ -179,6 +179,27 @@ h1, h2, h3, h4, h5, h6 {
 ul li a{
     text-decoration: none;
 }
+
+/* Add to existing styles */
+.hover-white:hover {
+    color: white !important;
+    transition: color 0.3s ease;
+}
+
+/* Footer styling improvements */
+footer .text-white-50 {
+    color: rgba(255, 255, 255, 0.7) !important; /* Slightly more visible than default */
+}
+
+footer hr.bg-light {
+    opacity: 0.3;
+    height: 1px;
+}
+
+footer a {
+    transition: color 0.3s ease;
+}
+
 @media screen and (max-width: 991px) {
     #home.container {
         padding-top: 1rem !important;

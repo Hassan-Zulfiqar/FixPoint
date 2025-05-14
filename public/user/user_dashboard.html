@@ -58,11 +58,11 @@
                             <i class="fas fa-tachometer-alt me-1"></i> Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="browse_services.html">
                             <i class="fas fa-search me-1"></i> Browse Services
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="request_service.html">
                             <i class="fas fa-plus-circle me-1"></i> Request Service
@@ -74,9 +74,8 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                <ul class="navbar-nav">                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-bell me-1"></i>
                             <span class="badge bg-danger notification-badge">3</span>
                         </a>
@@ -90,13 +89,13 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i> John Doe
+                            <img src="../images/default.jpg" class="rounded-circle me-2" alt="Profile" style="width: 24px; height: 24px; object-fit: cover;">
+                            <span class="user-name">User</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="user_profile.html"><i class="fas fa-id-card me-2"></i>My Profile</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                            <li><a class="dropdown-item" href="/logout" id="logoutButton"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -108,12 +107,11 @@
     <div class="container my-5">
         <!-- Welcome Section -->
         <div class="row mb-4">
-            <div class="col-lg-8">
-                <div class="profile-header">
+            <div class="col-lg-8">                <div class="profile-header">
                     <div class="d-flex align-items-center">
-                        <img src="https://via.placeholder.com/100" class="rounded-circle me-3" alt="Profile Picture">
+                        <img src="../images/default.jpg" class="rounded-circle me-3" alt="Profile Picture" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #fff; box-shadow: 0 3px 10px rgba(0,0,0,0.15);">
                         <div>
-                            <h2 class="mb-0">Welcome back, John!</h2>
+                            <h2 class="mb-0">Welcome back!</h2>
                             <p class="text-muted">What service do you need today?</p>
                             <a href="request_service.html" class="btn btn-primary">
                                 <i class="fas fa-plus-circle me-1"></i> Request New Service
@@ -121,23 +119,22 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
+            </div>            <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body quick-stats">
                         <h5 class="card-title">Quick Stats</h5>
                         <div class="d-flex justify-content-between mb-3">
                             <div>
                                 <p class="mb-0 text-muted">Active Requests</p>
-                                <h3>3</h3>
+                                <h3 class="active-requests">3</h3>
                             </div>
                             <div>
                                 <p class="mb-0 text-muted">Completed</p>
-                                <h3>12</h3>
+                                <h3 class="completed">12</h3>
                             </div>
                         </div>
                         <div class="progress">
-                            <div class="progress-bar bg-success" style="width: 75%">75% Satisfaction</div>
+                            <div class="progress-bar bg-success satisfaction-rate" style="width: 75%">75% Satisfaction</div>
                         </div>
                     </div>
                 </div>
@@ -226,7 +223,7 @@
                                 <h6 class="card-title">Painting</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=painting" class="btn btn-sm btn-outline-primary w-100">Explore</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -240,7 +237,7 @@
                                 <h6 class="card-title">Carpentry</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=carpentry" class="btn btn-sm btn-outline-primary w-100">Explore</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -254,7 +251,7 @@
                                 <h6 class="card-title">AC Repair</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=ac-repair" class="btn btn-sm btn-outline-primary w-100">Explore</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -263,12 +260,12 @@
                         <div class="card text-center service-request-card h-100">
                             <div class="card-body">
                                 <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
-                                    <i class="fas fa-couch fa-2x text-primary"></i>
+                                    <i class="fas fa-broom fa-2x text-primary"></i>
                                 </div>
-                                <h6 class="card-title">Furniture</h6>
+                                <h6 class="card-title">Cleaning</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=furniture" class="btn btn-sm btn-outline-primary w-100">Explore</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -277,12 +274,12 @@
                         <div class="card text-center service-request-card h-100">
                             <div class="card-body">
                                 <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
-                                    <i class="fas fa-bug fa-2x text-primary"></i>
+                                <i class="fas fa-wrench fa-2x text-primary"></i>
                                 </div>
-                                <h6 class="card-title">Pest Control</h6>
+                                <h6 class="card-title">Plumbing</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=pest-control" class="btn btn-sm btn-outline-primary w-100">Explore</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -291,97 +288,12 @@
                         <div class="card text-center service-request-card h-100">
                             <div class="card-body">
                                 <div class="bg-light rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
-                                    <i class="fas fa-tree fa-2x text-primary"></i>
+                                    <i class="fas fa-bolt fa-2x text-primary"></i>
                                 </div>
-                                <h6 class="card-title">Gardening</h6>
+                                <h6 class="card-title">Electrical</h6>
                             </div>
                             <div class="card-footer bg-white border-0">
-                                <a href="browse_services.html?category=gardening" class="btn btn-sm btn-outline-primary w-100">Explore</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Top Rated Service Providers -->
-        <div class="row">
-            <div class="col">
-                <h3 class="mb-3">Top Rated Service Providers</h3>
-                <div class="row g-3">
-                    <!-- Provider 1 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card service-request-card h-100">
-                            <img src="https://source.unsplash.com/random/300x150/?electrician" class="card-img-top" alt="Provider Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Mike's Electrical Services</h5>
-                                <p class="text-muted"><i class="fas fa-bolt me-1"></i>Electrician</p>
-                                <div class="d-flex mb-2">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star-half-alt text-warning"></i>
-                                    <span class="ms-1">4.5 (120 reviews)</span>
-                                </div>
-                                <a href="request_service.html?provider=1" class="btn btn-primary w-100">Request Service</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Provider 2 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card service-request-card h-100">
-                            <img src="https://source.unsplash.com/random/300x150/?plumber" class="card-img-top" alt="Provider Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Pro Plumbing Solutions</h5>
-                                <p class="text-muted"><i class="fas fa-wrench me-1"></i>Plumber</p>
-                                <div class="d-flex mb-2">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <span class="ms-1">5.0 (89 reviews)</span>
-                                </div>
-                                <a href="request_service.html?provider=2" class="btn btn-primary w-100">Request Service</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Provider 3 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card service-request-card h-100">
-                            <img src="https://source.unsplash.com/random/300x150/?cleaning" class="card-img-top" alt="Provider Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Sparkling Clean Co.</h5>
-                                <p class="text-muted"><i class="fas fa-broom me-1"></i>Cleaning Service</p>
-                                <div class="d-flex mb-2">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star text-warning"></i>
-                                    <span class="ms-1">4.2 (67 reviews)</span>
-                                </div>
-                                <a href="request_service.html?provider=3" class="btn btn-primary w-100">Request Service</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Provider 4 -->
-                    <div class="col-md-6 col-lg-3">
-                        <div class="card service-request-card h-100">
-                            <img src="https://source.unsplash.com/random/300x150/?carpenter" class="card-img-top" alt="Provider Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Woodcraft Masters</h5>
-                                <p class="text-muted"><i class="fas fa-hammer me-1"></i>Carpentry</p>
-                                <div class="d-flex mb-2">
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star-half-alt text-warning"></i>
-                                    <span class="ms-1">4.6 (52 reviews)</span>
-                                </div>
-                                <a href="request_service.html?provider=4" class="btn btn-primary w-100">Request Service</a>
+                                <a href="request_service.html" class="btn btn-sm btn-outline-primary w-100">Get Service</a>
                             </div>
                         </div>
                     </div>
@@ -396,20 +308,20 @@
             <div class="row">
                 <div class="col-md-3">
                     <h5><i class="fas fa-tools me-2"></i>FixPoint</h5>
-                    <p class="text-muted">Your trusted platform for local home services.</p>
+                    <p class="text-white-50">Your trusted platform for local home services.</p>
                 </div>
                 <div class="col-md-3">
                     <h6>Quick Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none text-muted">About Us</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Our Services</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Become a Provider</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Contact Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50 hover-white">About Us</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50 hover-white">Our Services</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50 hover-white">Become a Provider</a></li>
+                        <li><a href="#" class="text-decoration-none text-white-50 hover-white">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-md-3">
                     <h6>Contact Info</h6>
-                    <ul class="list-unstyled text-muted">
+                    <ul class="list-unstyled text-white-50">
                         <li><i class="fas fa-map-marker-alt me-2"></i>123 Service St, City, Country</li>
                         <li><i class="fas fa-phone me-2"></i>(123) 456-7890</li>
                         <li><i class="fas fa-envelope me-2"></i>info@fixpoint.com</li>
@@ -433,14 +345,35 @@
                     </div>
                 </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center text-muted">
+            <hr class="my-4 bg-light">
+            <div class="text-center text-white-50">
                 <small>&copy; 2023 FixPoint. All Rights Reserved.</small>
             </div>
         </div>
     </footer>
-
-    <!-- Bootstrap 5 JS Bundle with Popper -->
+      <!-- Bootstrap 5 JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/user_dashboard.js"></script>
+      <!-- Logout Handler -->
+    <script>
+        // Handle logout functionality
+        document.getElementById('logoutButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Call logout endpoint to clear server-side session
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'include'
+            }).then(function() {
+                // Redirect to login page regardless of response
+                window.location.href = '/login.html';
+            }).catch(function() {
+                // Still redirect even if there was an error
+                window.location.href = '/login.html';
+            });
+        });
+    </script>
 </body>
 </html>

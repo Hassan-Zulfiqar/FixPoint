@@ -6,6 +6,7 @@ const passport = require("./config/pass");
 const connectDB = require("./config/database");
 const authRoutes = require("./routes/auth_routes");
 const userRoutes = require('./routes/userRoutes');
+const providerServiceRoutes = require('./routes/providerServiceRoutes');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(passport.session());
 
 // Use API routes first with proper prefix
 app.use('/api/user', userRoutes);
+app.use('/api/provider/services', providerServiceRoutes);
 
 // Serve HTML file
 app.get("/", (req, res) => {
